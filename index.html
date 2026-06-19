@@ -19,8 +19,6 @@
       --green:     #1d6a4a;
       --green-lt:  #e6f2ec;
       --card-bg:   #ffffff;
-      --ad-bg:     #ffffff;
-      --ad-slot-bg:#f0ede8;
       --mono:      'DM Mono', monospace;
       --display:   'Fraunces', Georgia, serif;
       --body:      'Inter', system-ui, sans-serif;
@@ -36,11 +34,8 @@
       --green:     #52b86e;
       --green-lt:  #162a1e;
       --card-bg:   #161920;
-      --ad-bg:     #11131a;
-      --ad-slot-bg:#1a1d24;
     }
 
-    /* ── THEME TOGGLE ── */
     .theme-toggle {
       margin-left: auto;
       background: none;
@@ -54,445 +49,201 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      transition: border-color 0.2s, color 0.2s;
       white-space: nowrap;
     }
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
     .theme-toggle .icon { font-size: 0.9rem; }
 
     html { font-size: 16px; scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--body); line-height: 1.6; min-height: 100vh; transition: background 0.25s, color 0.25s; }
 
-    body {
-      background: var(--paper);
-      color: var(--ink);
-      font-family: var(--body);
-      line-height: 1.6;
-      min-height: 100vh;
-      transition: background 0.25s, color 0.25s;
-    }
+    header { border-bottom: 1px solid var(--rule); padding: 1.25rem 2rem; display: flex; align-items: center; gap: 0.75rem; }
+    .logo { font-family: var(--display); font-weight: 700; font-size: 1.2rem; color: var(--accent); letter-spacing: -0.01em; }
+    .logo-tag { font-size: 0.75rem; color: var(--muted); font-family: var(--mono); letter-spacing: 0.05em; text-transform: uppercase; }
 
-    /* ── HEADER ── */
-    header {
-      border-bottom: 1px solid var(--rule);
-      padding: 1.25rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .logo {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: var(--accent);
-      letter-spacing: -0.01em;
-    }
-    .logo-tag {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: var(--mono);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
+    .hero { max-width: 860px; margin: 0 auto; padding: 3.5rem 2rem 2rem; text-align: center; }
+    .hero-eyebrow { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem; }
+    .hero h1 { font-family: var(--display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub { margin-top: 1rem; font-size: 1rem; color: var(--muted); max-width: 480px; margin-left: auto; margin-right: auto; }
 
-    /* ── AD BANNER ── */
-    .ad-banner {
-      background: var(--ad-bg);
-      border-bottom: 1px solid var(--rule);
-      text-align: center;
-      padding: 0.6rem;
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-family: var(--mono);
-    }
-    .ad-banner .ad-slot {
-      display: inline-block;
-      width: 728px;
-      max-width: 100%;
-      height: 90px;
-      background: var(--ad-slot-bg);
-      border: 1px dashed var(--rule);
-      line-height: 90px;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .main-wrap { max-width: 960px; margin: 0 auto; padding: 2rem 2rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
 
-    /* ── HERO ── */
-    .hero {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 3.5rem 2rem 2rem;
-      text-align: center;
-    }
-    .hero-eyebrow {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.9rem;
-    }
-    .hero h1 {
-      font-family: var(--display);
-      font-weight: 300;
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-    .hero-sub {
-      margin-top: 1rem;
-      font-size: 1rem;
-      color: var(--muted);
-      max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* ── MAIN LAYOUT ── */
-    .main-wrap {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 2rem 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    /* ── FORM CARD ── */
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      padding: 2rem;
-    }
-    .card-title {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--rule);
-    }
+    .card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 2rem; transition: background 0.25s, border-color 0.25s; }
+    .card-title { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); }
 
     .field { margin-bottom: 1.4rem; }
-    .field label {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--ink);
-      margin-bottom: 0.4rem;
-    }
-    .field label span {
-      font-family: var(--mono);
-      font-size: 0.95rem;
-      color: var(--accent);
-      font-weight: 500;
-    }
+    .field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; font-weight: 500; color: var(--ink); margin-bottom: 0.4rem; }
+    .field label span { font-family: var(--mono); font-size: 0.95rem; color: var(--accent); font-weight: 500; }
 
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--accent);
-      cursor: pointer;
-      height: 4px;
-      margin-top: 0.3rem;
-    }
-    .range-bounds {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--muted);
-      margin-top: 0.25rem;
-    }
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; height: 4px; margin-top: 0.3rem; }
+    .range-bounds { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); margin-top: 0.25rem; }
 
-    .loan-type-row {
+    /* ── DIRECT NUMBER INPUTS ── */
+    .direct-input-row {
       display: flex;
+      align-items: center;
       gap: 0.5rem;
-      margin-bottom: 1.4rem;
+      margin-top: 0.55rem;
     }
-    .type-btn {
-      flex: 1;
-      padding: 0.5rem;
+    .direct-input {
+      width: 130px;
+      padding: 0.3rem 0.55rem;
+      background: var(--paper);
       border: 1px solid var(--rule);
-      background: transparent;
       border-radius: 3px;
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      transition: border-color 0.2s, background 0.25s;
+      -moz-appearance: textfield;
+    }
+    .direct-input::-webkit-outer-spin-button,
+    .direct-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .direct-input:focus { outline: none; border-color: var(--accent); }
+    .direct-input.invalid { border-color: #c0392b; color: #c0392b; }
+    .direct-input-apply {
+      padding: 0.3rem 0.7rem;
+      background: var(--accent-lt);
+      border: 1px solid var(--accent);
+      border-radius: 3px;
+      color: var(--accent);
       font-family: var(--mono);
       font-size: 0.72rem;
-      letter-spacing: 0.04em;
       cursor: pointer;
-      color: var(--muted);
-      transition: all 0.15s;
+      transition: background 0.15s, color 0.15s;
     }
-    .type-btn.active {
-      background: var(--accent-lt);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .direct-input-apply:hover { background: var(--accent); color: #fff; }
+    .direct-input-hint { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); }
 
-    .calc-btn {
-      width: 100%;
-      padding: 0.9rem;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      font-family: var(--body);
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      transition: background 0.15s;
-      letter-spacing: 0.01em;
-    }
+    .loan-type-row { display: flex; gap: 0.5rem; margin-bottom: 1.4rem; }
+    .type-btn { flex: 1; padding: 0.5rem; border: 1px solid var(--rule); background: transparent; border-radius: 3px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; cursor: pointer; color: var(--muted); transition: all 0.15s; }
+    .type-btn.active { background: var(--accent-lt); border-color: var(--accent); color: var(--accent); }
+
+    .calc-btn { width: 100%; padding: 0.9rem; background: var(--accent); color: #fff; border: none; border-radius: 3px; font-family: var(--body); font-size: 0.95rem; font-weight: 500; cursor: pointer; margin-top: 0.5rem; transition: background 0.15s; letter-spacing: 0.01em; }
     .calc-btn:hover { background: #163f6e; }
 
-    /* ── RESULTS CARD ── */
-    .results-card {
-      background: var(--card-bg);
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .results-header {
-      background: var(--accent);
-      padding: 1.5rem 2rem;
-      color: #fff;
-    }
-    .results-header .label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      opacity: 0.75;
-      margin-bottom: 0.3rem;
-    }
-    .results-header .monthly {
-      font-family: var(--display);
-      font-size: clamp(2.4rem, 5vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1;
-    }
-    .results-header .monthly-note {
-      font-size: 0.8rem;
-      opacity: 0.7;
-      margin-top: 0.3rem;
-    }
+    .results-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; transition: background 0.25s, border-color 0.25s; }
+    .results-header { background: var(--accent); padding: 1.5rem 2rem; color: #fff; }
+    .results-header .label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 0.3rem; }
+    .results-header .monthly { font-family: var(--display); font-size: clamp(2.4rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+    .results-header .monthly-note { font-size: 0.8rem; opacity: 0.7; margin-top: 0.3rem; }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 1px solid var(--rule);
-    }
-    .stat {
-      padding: 1.2rem 1.5rem;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-    }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+    .stat { padding: 1.2rem 1.5rem; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
     .stat:nth-child(even) { border-right: none; }
     .stat:nth-last-child(-n+2) { border-bottom: none; }
-    .stat-label {
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-family: var(--mono);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.3rem;
-    }
-    .stat-value {
-      font-family: var(--mono);
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: var(--ink);
-    }
+    .stat-label { font-size: 0.72rem; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+    .stat-value { font-family: var(--mono); font-size: 1.15rem; font-weight: 500; color: var(--ink); }
     .stat-value.green { color: var(--green); }
     .stat-value.red   { color: #9b2c2c; }
 
-    /* ── BAR CHART ── */
-    .bar-section {
-      padding: 1.5rem;
-      border-bottom: 1px solid var(--rule);
-    }
-    .bar-title {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-    }
+    .bar-section { padding: 1.5rem; border-bottom: 1px solid var(--rule); }
+    .bar-title { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
     .bar-wrap { display: flex; height: 10px; border-radius: 2px; overflow: hidden; }
     .bar-principal { background: var(--accent); }
     .bar-interest  { background: #c0392b; }
-    .bar-legend {
-      display: flex;
-      gap: 1.2rem;
-      margin-top: 0.6rem;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-    }
+    .bar-legend { display: flex; gap: 1.2rem; margin-top: 0.6rem; font-family: var(--mono); font-size: 0.7rem; }
     .leg { display: flex; align-items: center; gap: 0.35rem; color: var(--muted); }
     .leg-dot { width: 8px; height: 8px; border-radius: 50%; }
     .leg-dot.p { background: var(--accent); }
     .leg-dot.i { background: #c0392b; }
 
-    /* ── AMORTIZATION ── */
     .amort-section { padding: 1.5rem; }
-    .amort-title {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-    }
-    .amort-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-    }
-    .amort-table th {
-      text-align: left;
-      color: var(--muted);
-      padding: 0.3rem 0.4rem;
-      border-bottom: 1px solid var(--rule);
-      font-weight: 400;
-      letter-spacing: 0.04em;
-    }
-    .amort-table td {
-      padding: 0.35rem 0.4rem;
-      border-bottom: 1px solid var(--rule);
-      color: var(--ink);
-    }
+    .amort-title { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+    .amort-table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 0.72rem; }
+    .amort-table th { text-align: left; color: var(--muted); padding: 0.3rem 0.4rem; border-bottom: 1px solid var(--rule); font-weight: 400; letter-spacing: 0.04em; }
+    .amort-table td { padding: 0.35rem 0.4rem; border-bottom: 1px solid var(--rule); color: var(--ink); }
     .amort-table tr:last-child td { border-bottom: none; }
     .amort-table tr:hover td { background: var(--paper); }
-    .show-more {
-      width: 100%;
-      background: none;
-      border: 1px solid var(--rule);
-      border-radius: 3px;
-      padding: 0.55rem;
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-      cursor: pointer;
-      margin-top: 0.75rem;
-      letter-spacing: 0.05em;
-      transition: all 0.15s;
-    }
+    .show-more { width: 100%; background: none; border: 1px solid var(--rule); border-radius: 3px; padding: 0.55rem; font-family: var(--mono); font-size: 0.72rem; color: var(--muted); cursor: pointer; margin-top: 0.75rem; letter-spacing: 0.05em; transition: all 0.15s; }
     .show-more:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── FULL-WIDTH AD ── */
-    .ad-mid {
-      max-width: 960px;
-      margin: 0 auto 2rem;
-      padding: 0 2rem;
-      text-align: center;
-    }
-    .ad-mid .ad-slot {
-      display: inline-block;
-      width: 728px;
-      max-width: 100%;
-      height: 90px;
-      background: var(--card-bg);
-      border: 1px dashed var(--rule);
-      line-height: 90px;
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: var(--mono);
-    }
+    /* ── EXTRA PAYMENT CALC ── */
+    .extra-wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+    .extra-box { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 1.8rem 2rem; margin-bottom: 2.5rem; transition: background 0.25s, border-color 0.25s; }
+    .extra-box h3 { font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--ink); }
+    .extra-box .extra-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .extra-fields { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: end; }
+    .extra-field label { display: block; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+    .extra-field input { width: 100%; padding: 0.55rem 0.8rem; background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; color: var(--ink); font-family: var(--mono); font-size: 0.95rem; transition: border-color 0.2s, background 0.25s; -moz-appearance: textfield; }
+    .extra-field input::-webkit-outer-spin-button,
+    .extra-field input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .extra-field input:focus { outline: none; border-color: var(--accent); }
+    .extra-calc-btn { padding: 0.55rem 1.3rem; background: var(--accent); color: #fff; border: none; border-radius: 3px; font-family: var(--mono); font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
+    .extra-calc-btn:hover { background: #163f6e; }
+    .extra-result { margin-top: 1rem; padding: 1rem 1.2rem; border-radius: 3px; font-family: var(--mono); font-size: 0.82rem; display: none; line-height: 1.8; }
+    .extra-result.show { display: block; }
+    .extra-result.green { background: var(--green-lt); color: var(--green); border: 1px solid rgba(29,106,74,0.25); }
+    .extra-result .highlight { font-size: 1rem; font-weight: 500; }
 
-    /* ── INFO SECTION ── */
-    .info-section {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2rem 2rem 4rem;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    .info-card {
-      background: var(--card-bg);
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      padding: 1.5rem;
-    }
-    .info-card h3 {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    .info-card p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.65;
-    }
+    /* ── LOAN COMPARISON ── */
+    .compare-wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+    .compare-box { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 1.8rem 2rem; margin-bottom: 3rem; transition: background 0.25s, border-color 0.25s; }
+    .compare-box h3 { font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--ink); }
+    .compare-box .compare-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .compare-col { background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; padding: 1.2rem; transition: background 0.25s, border-color 0.25s; }
+    .compare-col-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
+    .compare-field { margin-bottom: 0.75rem; }
+    .compare-field label { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .compare-field input { width: 100%; padding: 0.45rem 0.7rem; background: var(--card-bg); border: 1px solid var(--rule); border-radius: 3px; color: var(--ink); font-family: var(--mono); font-size: 0.88rem; transition: border-color 0.2s, background 0.25s; -moz-appearance: textfield; }
+    .compare-field input::-webkit-outer-spin-button,
+    .compare-field input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .compare-field input:focus { outline: none; border-color: var(--accent); }
+    .compare-btn { padding: 0.55rem 1.3rem; background: var(--accent); color: #fff; border: none; border-radius: 3px; font-family: var(--mono); font-size: 0.8rem; cursor: pointer; transition: background 0.15s; }
+    .compare-btn:hover { background: #163f6e; }
+    .compare-result { display: none; margin-top: 1rem; }
+    .compare-result.show { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .compare-res-col { border: 1px solid var(--rule); border-radius: 3px; padding: 1rem; background: var(--paper); transition: background 0.25s, border-color 0.25s; }
+    .compare-res-col.winner { border-color: var(--green); background: var(--green-lt); }
+    .compare-res-title { font-family: var(--mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 0.6rem; }
+    .compare-res-col.winner .compare-res-title { color: var(--green); }
+    .compare-res-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.78rem; color: var(--ink); margin-bottom: 0.3rem; }
+    .compare-res-row span:last-child { font-weight: 500; }
+    .compare-winner-badge { display: inline-block; background: var(--green); color: #fff; font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.15rem 0.45rem; border-radius: 2px; margin-bottom: 0.5rem; }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--rule);
-      padding: 1.5rem 2rem;
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: var(--mono);
-    }
+    .info-section { max-width: 960px; margin: 0 auto; padding: 2rem 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .info-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 1.5rem; transition: background 0.25s, border-color 0.25s; }
+    .info-card h3 { font-family: var(--display); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: var(--ink); }
+    .info-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+
+    footer { border-top: 1px solid var(--rule); padding: 1.5rem 2rem; text-align: center; font-size: 0.75rem; color: var(--muted); font-family: var(--mono); transition: border-color 0.25s; }
     footer a { color: var(--muted); text-decoration: underline; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 680px) {
       .main-wrap { grid-template-columns: 1fr; }
       .info-section { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .extra-fields { grid-template-columns: 1fr 1fr; }
+      .extra-fields .extra-calc-btn { grid-column: 1 / -1; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-result.show { grid-template-columns: 1fr; }
       header { padding: 1rem; }
       .hero { padding: 2rem 1rem 1rem; }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; }
+    @media (max-width: 420px) {
+      .extra-fields { grid-template-columns: 1fr; }
     }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <span class="logo">LoanClear</span>
   <span class="logo-tag">Free Mortgage & Loan Calculator</span>
   <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle dark mode">
-    <span class="icon">☀️</span><span id="theme-label">Light</span>
+    <span class="icon">☀️</span><span>Light</span>
   </button>
 </header>
 
-<!-- TOP AD BANNER (replace with AdSense code) -->
-<div class="ad-banner">
-  <!-- Google AdSense: replace this block -->
-  <div class="ad-slot">Advertisement — 728×90 Leaderboard</div>
-  <!-- End AdSense -->
-</div>
-
-<!-- HERO -->
 <section class="hero">
   <p class="hero-eyebrow">Mortgage · Personal · Auto · Student</p>
   <h1>Know your <em>exact</em> monthly payment<br>before you sign anything.</h1>
-  <p class="hero-sub">Adjust the sliders and get an instant breakdown — principal, interest, and full amortization schedule.</p>
+  <p class="hero-sub">Type your numbers directly or use the sliders — instant breakdown with full amortization schedule.</p>
 </section>
 
-<!-- CALCULATOR -->
 <div class="main-wrap">
 
   <!-- INPUT FORM -->
@@ -508,26 +259,46 @@
 
     <div class="field">
       <label>Loan Amount <span id="lbl-amount">$300,000</span></label>
-      <input type="range" id="rng-amount" min="5000" max="1500000" step="5000" value="300000" oninput="syncLabel('amount',this.value)" />
+      <input type="range" id="rng-amount" min="5000" max="1500000" step="5000" value="300000" oninput="syncSlider('amount',this.value)" />
       <div class="range-bounds"><span>$5k</span><span>$1.5M</span></div>
+      <div class="direct-input-row">
+        <input type="number" class="direct-input" id="inp-amount" placeholder="300000" aria-label="Loan amount"/>
+        <button class="direct-input-apply" onclick="applyDirect('amount')">Apply</button>
+        <span class="direct-input-hint">type exact $</span>
+      </div>
     </div>
 
     <div class="field">
       <label>Interest Rate (APR) <span id="lbl-rate">6.5%</span></label>
-      <input type="range" id="rng-rate" min="0.5" max="20" step="0.1" value="6.5" oninput="syncLabel('rate',this.value)" />
+      <input type="range" id="rng-rate" min="0.5" max="20" step="0.1" value="6.5" oninput="syncSlider('rate',this.value)" />
       <div class="range-bounds"><span>0.5%</span><span>20%</span></div>
+      <div class="direct-input-row">
+        <input type="number" class="direct-input" id="inp-rate" placeholder="6.5" step="0.01" aria-label="Interest rate"/>
+        <button class="direct-input-apply" onclick="applyDirect('rate')">Apply</button>
+        <span class="direct-input-hint">% APR</span>
+      </div>
     </div>
 
     <div class="field">
       <label>Loan Term <span id="lbl-term">30 years</span></label>
-      <input type="range" id="rng-term" min="1" max="30" step="1" value="30" oninput="syncLabel('term',this.value)" />
+      <input type="range" id="rng-term" min="1" max="30" step="1" value="30" oninput="syncSlider('term',this.value)" />
       <div class="range-bounds"><span>1 yr</span><span>30 yrs</span></div>
+      <div class="direct-input-row">
+        <input type="number" class="direct-input" id="inp-term" placeholder="30" aria-label="Loan term in years"/>
+        <button class="direct-input-apply" onclick="applyDirect('term')">Apply</button>
+        <span class="direct-input-hint">years (1–30)</span>
+      </div>
     </div>
 
     <div class="field">
       <label>Down Payment <span id="lbl-down">$60,000</span></label>
-      <input type="range" id="rng-down" min="0" max="500000" step="1000" value="60000" oninput="syncLabel('down',this.value)" />
+      <input type="range" id="rng-down" min="0" max="500000" step="1000" value="60000" oninput="syncSlider('down',this.value)" />
       <div class="range-bounds"><span>$0</span><span>$500k</span></div>
+      <div class="direct-input-row">
+        <input type="number" class="direct-input" id="inp-down" placeholder="60000" aria-label="Down payment"/>
+        <button class="direct-input-apply" onclick="applyDirect('down')">Apply</button>
+        <span class="direct-input-hint">type exact $</span>
+      </div>
     </div>
 
     <button class="calc-btn" onclick="calculate()">Calculate Payment →</button>
@@ -540,26 +311,12 @@
       <div class="monthly" id="res-monthly">$1,517</div>
       <div class="monthly-note" id="res-note">30-year mortgage · 6.5% APR</div>
     </div>
-
     <div class="stats-grid">
-      <div class="stat">
-        <div class="stat-label">Loan Amount</div>
-        <div class="stat-value" id="res-principal">$240,000</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Total Interest</div>
-        <div class="stat-value red" id="res-interest">$306,120</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Total Cost</div>
-        <div class="stat-value" id="res-total">$546,120</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">Payoff Date</div>
-        <div class="stat-value green" id="res-payoff">Jun 2055</div>
-      </div>
+      <div class="stat"><div class="stat-label">Loan Amount</div><div class="stat-value" id="res-principal">$240,000</div></div>
+      <div class="stat"><div class="stat-label">Total Interest</div><div class="stat-value red" id="res-interest">$306,120</div></div>
+      <div class="stat"><div class="stat-label">Total Cost</div><div class="stat-value" id="res-total">$546,120</div></div>
+      <div class="stat"><div class="stat-label">Payoff Date</div><div class="stat-value green" id="res-payoff">Jun 2055</div></div>
     </div>
-
     <div class="bar-section">
       <div class="bar-title">Principal vs. Interest</div>
       <div class="bar-wrap">
@@ -571,18 +328,10 @@
         <div class="leg"><div class="leg-dot i"></div><span id="leg-i">Interest 56%</span></div>
       </div>
     </div>
-
     <div class="amort-section">
       <div class="amort-title">Amortization Schedule (first 5 years)</div>
       <table class="amort-table">
-        <thead>
-          <tr>
-            <th>Year</th>
-            <th>Principal</th>
-            <th>Interest</th>
-            <th>Balance</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Year</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
         <tbody id="amort-body"></tbody>
       </table>
       <button class="show-more" onclick="toggleAmort()">▼ Show full schedule</button>
@@ -590,14 +339,51 @@
   </div>
 </div>
 
-<!-- MID AD (replace with AdSense) -->
-<div class="ad-mid">
-  <!-- Google AdSense: replace this block -->
-  <div class="ad-slot">Advertisement — 728×90 Leaderboard</div>
-  <!-- End AdSense -->
+<!-- EXTRA PAYMENT CALCULATOR -->
+<div class="extra-wrap">
+  <div class="extra-box">
+    <h3>Extra Payment Savings Calculator</h3>
+    <p class="extra-sub">See how much time and money you save by paying a little extra each month — uses your current loan above.</p>
+    <div class="extra-fields">
+      <div class="extra-field">
+        <label for="extra-monthly">Extra Monthly Payment ($)</label>
+        <input type="number" id="extra-monthly" placeholder="e.g. 200" min="0"/>
+      </div>
+      <div class="extra-field">
+        <label for="extra-lump">One-Time Lump Sum ($)</label>
+        <input type="number" id="extra-lump" placeholder="e.g. 5000" min="0"/>
+      </div>
+      <button class="extra-calc-btn" onclick="calcExtra()">Calculate Savings</button>
+    </div>
+    <div class="extra-result" id="extra-result"></div>
+  </div>
 </div>
 
-<!-- INFO CARDS (SEO content) -->
+<!-- LOAN COMPARISON -->
+<div class="compare-wrap">
+  <div class="compare-box">
+    <h3>Side-by-Side Loan Comparison</h3>
+    <p class="compare-sub">Compare two loan offers to see which actually costs less over the full term.</p>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="compare-col-title">Loan A</div>
+        <div class="compare-field"><label>Amount ($)</label><input type="number" id="cmp-a-amount" value="300000"/></div>
+        <div class="compare-field"><label>Rate (% APR)</label><input type="number" id="cmp-a-rate" value="6.5" step="0.01"/></div>
+        <div class="compare-field"><label>Term (years)</label><input type="number" id="cmp-a-term" value="30"/></div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-col-title">Loan B</div>
+        <div class="compare-field"><label>Amount ($)</label><input type="number" id="cmp-b-amount" value="300000"/></div>
+        <div class="compare-field"><label>Rate (% APR)</label><input type="number" id="cmp-b-rate" value="7.0" step="0.01"/></div>
+        <div class="compare-field"><label>Term (years)</label><input type="number" id="cmp-b-term" value="30"/></div>
+      </div>
+    </div>
+    <button class="compare-btn" onclick="calcCompare()">Compare Loans →</button>
+    <div class="compare-result" id="compare-result"></div>
+  </div>
+</div>
+
+<!-- INFO CARDS -->
 <section class="info-section">
   <div class="info-card">
     <h3>How is my payment calculated?</h3>
@@ -605,50 +391,70 @@
   </div>
   <div class="info-card">
     <h3>What's a good interest rate?</h3>
-    <p>Rates depend on the loan type, your credit score, and market conditions. As a benchmark, borrowers with excellent credit (740+) typically qualify for significantly lower rates. Even a 0.5% difference on a 30-year mortgage can save tens of thousands.</p>
+    <p>Rates depend on the loan type, your credit score, and market conditions. Borrowers with excellent credit (740+) typically qualify for significantly lower rates. Even a 0.5% difference on a 30-year mortgage can save tens of thousands.</p>
   </div>
   <div class="info-card">
     <h3>Should I pay extra each month?</h3>
-    <p>Even small extra payments toward principal can dramatically shorten your loan term and reduce total interest paid. On a 30-year mortgage, an extra $200/month can cut years off the loan and save a significant amount in interest.</p>
+    <p>Even small extra payments toward principal can dramatically shorten your loan term and reduce total interest paid. Use the Extra Payment Calculator above to see exactly how much you'd save.</p>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p>LoanClear is for estimation purposes only — not financial advice. Always consult a licensed lender. &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Disclaimer</a></p>
 </footer>
 
 <script>
-  // ── Theme toggle ──
   function toggleTheme() {
     const isDark = document.body.classList.toggle('dark');
     document.getElementById('theme-btn').innerHTML = isDark
-      ? '<span class="icon">🌙</span><span id="theme-label">Dark</span>'
-      : '<span class="icon">☀️</span><span id="theme-label">Light</span>';
+      ? '<span class="icon">🌙</span><span>Dark</span>'
+      : '<span class="icon">☀️</span><span>Light</span>';
   }
 
-  // ── State ──
   let showFull = false;
   let currentType = 'Mortgage';
   let amortData = [];
 
-  // ── Label sync ──
-  function syncLabel(key, val) {
-    const map = {
-      amount: v => '$' + Number(v).toLocaleString(),
-      rate:   v => parseFloat(v).toFixed(1) + '%',
-      term:   v => v + (v == 1 ? ' year' : ' years'),
-      down:   v => '$' + Number(v).toLocaleString(),
-    };
-    document.getElementById('lbl-' + key).textContent = map[key](val);
+  const fieldConfig = {
+    amount: { label: v => '$' + Number(v).toLocaleString(),       min: 5000, max: 1500000 },
+    rate:   { label: v => parseFloat(v).toFixed(1) + '%',         min: 0.1,  max: 30      },
+    term:   { label: v => v + (v == 1 ? ' year' : ' years'),      min: 1,    max: 30      },
+    down:   { label: v => '$' + Number(v).toLocaleString(),        min: 0,    max: 500000  },
+  };
+
+  function syncSlider(key, val) {
+    document.getElementById('lbl-' + key).textContent = fieldConfig[key].label(val);
+    const inp = document.getElementById('inp-' + key);
+    if (document.activeElement !== inp) inp.value = val;
+    inp.classList.remove('invalid');
     calculate();
   }
+
+  function applyDirect(key) {
+    const inp = document.getElementById('inp-' + key);
+    const cfg = fieldConfig[key];
+    const val = parseFloat(inp.value);
+    if (isNaN(val) || val < cfg.min || val > cfg.max) {
+      inp.classList.add('invalid');
+      return;
+    }
+    inp.classList.remove('invalid');
+    const rng = document.getElementById('rng-' + key);
+    rng.value = Math.min(Math.max(val, +rng.min), +rng.max);
+    document.getElementById('lbl-' + key).textContent = cfg.label(val);
+    calculate();
+  }
+
+  ['amount','rate','term','down'].forEach(key => {
+    document.getElementById('inp-' + key).addEventListener('keydown', e => {
+      if (e.key === 'Enter') applyDirect(key);
+    });
+  });
 
   function setType(btn, type) {
     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentType = type;
-    // Adjust sensible defaults per type
     const defaults = {
       Mortgage: { amount: 300000, rate: 6.5, term: 30, down: 60000 },
       Auto:     { amount: 35000,  rate: 7.5, term: 5,  down: 5000  },
@@ -656,13 +462,19 @@
       Student:  { amount: 40000,  rate: 5.5, term: 10, down: 0     },
     };
     const d = defaults[type];
-    document.getElementById('rng-amount').value = d.amount; syncLabel('amount', d.amount);
-    document.getElementById('rng-rate').value   = d.rate;   syncLabel('rate',   d.rate);
-    document.getElementById('rng-term').value   = d.term;   syncLabel('term',   d.term);
-    document.getElementById('rng-down').value   = d.down;   syncLabel('down',   d.down);
+    Object.keys(d).forEach(key => {
+      document.getElementById('rng-' + key).value = d[key];
+      syncSlider(key, d[key]);
+    });
   }
 
-  // ── Core calc ──
+  function calcPayment(principal, rate, termYears) {
+    const mr = rate / 100 / 12;
+    const n  = termYears * 12;
+    if (mr === 0) return principal / n;
+    return principal * (mr * Math.pow(1 + mr, n)) / (Math.pow(1 + mr, n) - 1);
+  }
+
   function calculate() {
     const amount = +document.getElementById('rng-amount').value;
     const rate   = +document.getElementById('rng-rate').value;
@@ -670,87 +482,137 @@
     const down   = +document.getElementById('rng-down').value;
 
     const principal = Math.max(0, amount - down);
-    const monthlyRate = rate / 100 / 12;
-    const numPayments = term * 12;
-
-    let monthly;
-    if (monthlyRate === 0) {
-      monthly = principal / numPayments;
-    } else {
-      monthly = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments))
-                           / (Math.pow(1 + monthlyRate, numPayments) - 1);
-    }
-
-    const totalCost     = monthly * numPayments;
-    const totalInterest = totalCost - principal;
+    const monthly   = calcPayment(principal, rate, term);
+    const n         = term * 12;
+    const totalCost = monthly * n;
+    const totalInt  = totalCost - principal;
     const pctP = principal / totalCost * 100;
     const pctI = 100 - pctP;
 
-    // Payoff date
-    const now = new Date();
-    const payoff = new Date(now.getFullYear(), now.getMonth() + numPayments);
+    const now    = new Date();
+    const payoff = new Date(now.getFullYear(), now.getMonth() + n);
     const payoffStr = payoff.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
-    // Build amortization
     amortData = [];
     let balance = principal;
+    const mr = rate / 100 / 12;
     for (let y = 1; y <= term; y++) {
-      let yearPrincipal = 0, yearInterest = 0;
-      for (let m = 0; m < 12 && balance > 0; m++) {
-        const intPmt  = balance * monthlyRate;
-        const prinPmt = Math.min(monthly - intPmt, balance);
-        yearInterest  += intPmt;
-        yearPrincipal += prinPmt;
-        balance       -= prinPmt;
+      let yp = 0, yi = 0;
+      for (let m = 0; m < 12 && balance > 0.01; m++) {
+        const ip = balance * mr;
+        const pp = Math.min(monthly - ip, balance);
+        yi += ip; yp += pp; balance -= pp;
       }
-      amortData.push({
-        year: now.getFullYear() + y,
-        principal: yearPrincipal,
-        interest: yearInterest,
-        balance: Math.max(0, balance)
-      });
+      amortData.push({ year: now.getFullYear() + y, principal: yp, interest: yi, balance: Math.max(0, balance) });
     }
 
-    // Update DOM
-    document.getElementById('res-monthly').textContent  = '$' + fmt(monthly);
-    document.getElementById('res-note').textContent     = `${term}-year ${currentType.toLowerCase()} · ${rate}% APR`;
+    document.getElementById('res-monthly').textContent   = '$' + fmt(monthly);
+    document.getElementById('res-note').textContent      = `${term}-year ${currentType.toLowerCase()} · ${rate}% APR`;
     document.getElementById('res-principal').textContent = '$' + fmtK(principal);
-    document.getElementById('res-interest').textContent  = '$' + fmtK(totalInterest);
+    document.getElementById('res-interest').textContent  = '$' + fmtK(totalInt);
     document.getElementById('res-total').textContent     = '$' + fmtK(totalCost);
     document.getElementById('res-payoff').textContent    = payoffStr;
-
     document.getElementById('bar-p').style.width = pctP.toFixed(1) + '%';
     document.getElementById('bar-i').style.width = pctI.toFixed(1) + '%';
     document.getElementById('leg-p').textContent = `Principal ${pctP.toFixed(0)}%`;
     document.getElementById('leg-i').textContent = `Interest ${pctI.toFixed(0)}%`;
-
     renderAmort();
   }
 
   function renderAmort() {
     const rows = showFull ? amortData : amortData.slice(0, 5);
-    document.getElementById('amort-body').innerHTML = rows.map(r => `
-      <tr>
-        <td>${r.year}</td>
-        <td>$${fmtK(r.principal)}</td>
-        <td>$${fmtK(r.interest)}</td>
-        <td>$${fmtK(r.balance)}</td>
-      </tr>
-    `).join('');
-    document.querySelector('.show-more').textContent = showFull
-      ? '▲ Show less'
-      : '▼ Show full schedule';
+    document.getElementById('amort-body').innerHTML = rows.map(r =>
+      `<tr><td>${r.year}</td><td>$${fmtK(r.principal)}</td><td>$${fmtK(r.interest)}</td><td>$${fmtK(r.balance)}</td></tr>`
+    ).join('');
+    document.querySelector('.show-more').textContent = showFull ? '▲ Show less' : '▼ Show full schedule';
   }
 
-  function toggleAmort() {
-    showFull = !showFull;
-    renderAmort();
+  function toggleAmort() { showFull = !showFull; renderAmort(); }
+
+  // ── Extra payment calculator ──
+  function calcExtra() {
+    const principal  = Math.max(0, +document.getElementById('rng-amount').value - +document.getElementById('rng-down').value);
+    const rate       = +document.getElementById('rng-rate').value;
+    const term       = +document.getElementById('rng-term').value;
+    const extraMo    = parseFloat(document.getElementById('extra-monthly').value) || 0;
+    const lump       = parseFloat(document.getElementById('extra-lump').value) || 0;
+    const result     = document.getElementById('extra-result');
+
+    if (principal <= 0) {
+      result.className = 'extra-result show green';
+      result.innerHTML = 'Please set a loan amount above first.';
+      return;
+    }
+    if (extraMo <= 0 && lump <= 0) {
+      result.className = 'extra-result show green';
+      result.innerHTML = 'Enter an extra monthly payment or lump sum to see your savings.';
+      return;
+    }
+
+    const mr          = rate / 100 / 12;
+    const baseMonthly = calcPayment(principal, rate, term);
+    const baseTotalI  = baseMonthly * term * 12 - principal;
+
+    function monthsToPayoff(bal, pmt, mRate) {
+      if (mRate === 0) return bal / pmt;
+      if (pmt <= bal * mRate) return Infinity;
+      return -Math.log(1 - (bal * mRate) / pmt) / Math.log(1 + mRate);
+    }
+
+    const adjBal      = Math.max(0, principal - lump);
+    const adjMonthly  = baseMonthly + extraMo;
+    const adjMonths   = monthsToPayoff(adjBal, adjMonthly, mr);
+    const adjTotalI   = adjMonthly * adjMonths - adjBal;
+    const savedI      = baseTotalI - adjTotalI;
+    const savedMonths = term * 12 - adjMonths;
+    const sy          = Math.floor(savedMonths / 12);
+    const sm          = Math.round(savedMonths % 12);
+    const timeStr     = sy > 0 ? `${sy} yr${sy > 1 ? 's' : ''}${sm > 0 ? ` ${sm} mo` : ''}` : `${Math.round(savedMonths)} months`;
+
+    result.className = 'extra-result show green';
+    result.innerHTML = `
+      <div class="highlight">You save $${fmtK(savedI)} in interest and pay off ${timeStr} sooner.</div>
+      <div style="margin-top:0.5rem;opacity:0.85">
+        New monthly: $${fmt(adjMonthly)} &nbsp;·&nbsp; New term: ${Math.ceil(adjMonths / 12)} years
+        ${lump > 0 ? ` &nbsp;·&nbsp; Lump sum: $${fmtK(lump)}` : ''}
+      </div>
+    `;
+  }
+
+  // ── Loan comparison ──
+  function calcCompare() {
+    const loans = ['a','b'].map(id => ({
+      amount: parseFloat(document.getElementById(`cmp-${id}-amount`).value) || 0,
+      rate:   parseFloat(document.getElementById(`cmp-${id}-rate`).value)   || 0,
+      term:   parseFloat(document.getElementById(`cmp-${id}-term`).value)   || 0,
+    }));
+    const res = loans.map(l => {
+      const mo    = calcPayment(l.amount, l.rate, l.term);
+      const total = mo * l.term * 12;
+      return { monthly: mo, total, interest: total - l.amount };
+    });
+    const wi = res[0].total <= res[1].total ? 0 : 1;
+    const container = document.getElementById('compare-result');
+    container.className = 'compare-result show';
+    container.innerHTML = ['a','b'].map((id, i) => {
+      const isWinner = i === wi;
+      const diff = Math.abs(res[0].total - res[1].total);
+      return `
+        <div class="compare-res-col${isWinner ? ' winner' : ''}">
+          ${isWinner ? '<div class="compare-winner-badge">✓ Lower Total Cost</div>' : ''}
+          <div class="compare-res-title">Loan ${id.toUpperCase()}</div>
+          <div class="compare-res-row"><span>Monthly</span><span>$${fmt(res[i].monthly)}</span></div>
+          <div class="compare-res-row"><span>Total Interest</span><span>$${fmtK(res[i].interest)}</span></div>
+          <div class="compare-res-row"><span>Total Cost</span><span>$${fmtK(res[i].total)}</span></div>
+          ${!isWinner ? `<div class="compare-res-row" style="margin-top:0.4rem;opacity:0.7"><span>Extra vs Loan ${['A','B'][wi]}</span><span>$${fmtK(diff)}</span></div>` : ''}
+        </div>
+      `;
+    }).join('');
   }
 
   function fmt(n)  { return Math.round(n).toLocaleString(); }
   function fmtK(n) { return Math.round(n).toLocaleString(); }
 
-  // Init
   calculate();
 </script>
 </body>
