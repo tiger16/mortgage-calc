@@ -231,10 +231,10 @@
 <body>
 
 <header>
-  <span class="logo">LoanClear</span>
+  <span class="logo">EasyLoanCalculator</span>
   <span class="logo-tag">Free Mortgage & Loan Calculator</span>
   <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle dark mode">
-    <span class="icon">☀️</span><span>Light</span>
+    <span class="icon">🌙</span><span>Dark</span>
   </button>
 </header>
 
@@ -400,15 +400,15 @@
 </section>
 
 <footer>
-  <p>LoanClear is for estimation purposes only — not financial advice. Always consult a licensed lender. &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Disclaimer</a></p>
+  <p>EasyLoanCalculator is for estimation purposes only — not financial advice. Always consult a licensed lender. &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Disclaimer</a></p>
 </footer>
 
 <script>
   function toggleTheme() {
     const isDark = document.body.classList.toggle('dark');
     document.getElementById('theme-btn').innerHTML = isDark
-      ? '<span class="icon">🌙</span><span>Dark</span>'
-      : '<span class="icon">☀️</span><span>Light</span>';
+      ? '<span class="icon">☀️</span><span>Light</span>'
+      : '<span class="icon">🌙</span><span>Dark</span>';
   }
 
   let showFull = false;
