@@ -6,8 +6,6 @@
   <title>Loan & Mortgage Calculator — Instant Monthly Payment Estimator</title>
   <meta name="description" content="Free loan and mortgage calculator. Instantly estimate your monthly payment, total interest, and full amortization breakdown."/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,700;1,300&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6623585309429140"
-     crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -401,8 +399,67 @@
   </div>
 </section>
 
+<!-- ── LOAN TYPE GUIDE ── -->
+<section style="max-width:960px;margin:0 auto;padding:1rem 2rem 3rem;">
+  <p style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;border-bottom:1px solid var(--rule);padding-bottom:0.75rem;">Guide</p>
+  <h2 style="font-family:var(--display);font-weight:700;font-size:1.6rem;margin-bottom:1.2rem;color:var(--ink);">Understanding the Four Loan Types</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2.5rem;">
+    <div>
+      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Mortgage</h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Mortgages are secured against the home itself, which is why they carry longer terms (commonly 15 or 30 years) and lower rates than unsecured debt. Most lenders expect a down payment of at least 3–20% of the purchase price; putting down less than 20% often triggers private mortgage insurance (PMI), an added monthly cost until you build enough equity.</p>
+    </div>
+    <div>
+      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Auto Loan</h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Auto loans are also secured — this time against the vehicle — and typically run 3 to 7 years. Shorter terms mean higher monthly payments but noticeably less interest paid overall, since the balance shrinks faster and the car depreciates less than the loan term would otherwise assume.</p>
+    </div>
+    <div>
+      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Personal Loan</h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Personal loans are usually unsecured, meaning there's no collateral backing them — which is why they tend to carry the highest rates of the four types here. Terms are short (2–7 years), and approval leans heavily on credit score and income rather than an asset's value.</p>
+    </div>
+    <div>
+      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Student Loan</h3>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Student loans often have longer repayment windows (10+ years) and, for federal loans in particular, come with borrower protections like income-driven repayment or deferment that this simple calculator does not model. Always check your loan servicer's terms before assuming a fixed monthly figure.</p>
+    </div>
+  </div>
+
+  <h2 style="font-family:var(--display);font-weight:700;font-size:1.6rem;margin-bottom:1.2rem;color:var(--ink);">Glossary of Terms Used in This Calculator</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.9rem 2rem;margin-bottom:2.5rem;">
+    <div><strong style="font-size:0.85rem;color:var(--ink);">Principal</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The amount you actually borrow — the loan amount minus any down payment.</p></div>
+    <div><strong style="font-size:0.85rem;color:var(--ink);">APR</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Annual Percentage Rate — the yearly cost of the loan expressed as a percentage, used here to derive the monthly rate.</p></div>
+    <div><strong style="font-size:0.85rem;color:var(--ink);">Amortization</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The process of paying off a loan in fixed installments, where early payments are mostly interest and later payments are mostly principal.</p></div>
+    <div><strong style="font-size:0.85rem;color:var(--ink);">Term</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The length of time you have to repay the loan in full, usually expressed in years.</p></div>
+    <div><strong style="font-size:0.85rem;color:var(--ink);">Down Payment</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Money paid upfront that reduces the amount you need to borrow — and often improves your rate.</p></div>
+    <div><strong style="font-size:0.85rem;color:var(--ink);">Total Interest</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The total cost of borrowing over the full term — everything paid beyond the original principal.</p></div>
+  </div>
+
+  <h2 style="font-family:var(--display);font-weight:700;font-size:1.6rem;margin-bottom:1.2rem;color:var(--ink);">Frequently Asked Questions</h2>
+  <div style="display:flex;flex-direction:column;gap:1.2rem;">
+    <div>
+      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Does this calculator give me an official loan offer?</h3>
+      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">No. This tool provides an estimate based on the numbers you enter. Actual loan offers depend on a full underwriting process, including your credit history, income verification, and lender-specific fees that aren't reflected here.</p>
+    </div>
+    <div>
+      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Why is my real payment higher than the estimate here?</h3>
+      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">Real-world payments often include extras this calculator doesn't model: property taxes and homeowners insurance (for mortgages, often bundled into an escrow payment), PMI, origination fees, or a variable rate that changes over time. Treat this figure as principal-and-interest only.</p>
+    </div>
+    <div>
+      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Fixed rate vs. variable rate — which does this calculator assume?</h3>
+      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">This calculator assumes a fixed rate for the full term. Adjustable-rate loans (ARMs) change after an initial period, so the schedule shown here would only apply to the fixed portion of an ARM.</p>
+    </div>
+    <div>
+      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">How much does an extra payment really save?</h3>
+      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">Because interest is calculated on the remaining balance each month, extra principal payments made early in the loan have an outsized effect — they reduce the balance interest accrues on for every remaining month. Use the Extra Payment Calculator above with your own numbers to see the exact effect.</p>
+    </div>
+    <div>
+      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Is a longer or shorter term better?</h3>
+      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">A shorter term means higher monthly payments but substantially less total interest, since the balance is paid down faster. A longer term lowers the monthly payment but increases the total cost of the loan. The Loan Comparison tool above can show the trade-off side by side.</p>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <p>EasyLoanCalculator is for estimation purposes only — not financial advice. Always consult a licensed lender. &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Disclaimer</a></p>
+  <p>EasyLoanCalculator is for estimation purposes only — not financial advice. Always consult a licensed lender. &nbsp;·&nbsp; <a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="disclaimer.html">Disclaimer</a> &nbsp;·&nbsp; <a href="about.html">About</a></p>
 </footer>
 
 <script>
