@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us</title>
+  <meta name="description" content="Get in touch with questions, corrections, feature suggestions or privacy requests."/>
+  <meta name="robots" content="index, follow"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f6f7f9; --surface: #ffffff; --ink: #16181d; --body: #3e434d;
+      --muted: #666c78; --rule: #dde0e6; --accent: #1f5fae; --accent-ink: #ffffff;
+      --ok: #1d6a4a; --ok-bg: #e7f3ec;
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1115; --surface: #171a20; --ink: #eceef2; --body: #c1c6d0;
+        --muted: #9aa0ad; --rule: #2a2e37; --accent: #6ea8ec; --accent-ink: #0f1115;
+        --ok: #6cc48f; --ok-bg: #16281e;
+      }
+    }
+    html { font-size: 16px; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--font); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    header, footer { padding: 1rem 1.5rem; }
+    header { border-bottom: 1px solid var(--rule); background: var(--surface); }
+    header a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    header a:hover { text-decoration: underline; }
+    main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 3rem 1.5rem; }
+    h1 { font-size: clamp(1.8rem, 5vw, 2.4rem); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    h2 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    p, li { color: var(--body); }
+    .intro { font-size: 1.05rem; margin-bottom: 2rem; }
+
+    .email-card {
+      background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
+      padding: 1.25rem 1.5rem; margin-bottom: 2rem;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;
+    }
+    .email-card .label { font-size: 0.85rem; color: var(--muted); }
+    .email-card a { font-size: 1.15rem; font-weight: 600; color: var(--accent); word-break: break-all; }
+    .copy-btn {
+      background: none; border: 1px solid var(--rule); border-radius: 6px;
+      padding: 0.45rem 0.9rem; font: inherit; font-size: 0.85rem; color: var(--ink); cursor: pointer;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    form { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem; }
+    .form-note { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .field { margin-bottom: 1rem; }
+    label { display: block; font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
+    input, select, textarea {
+      width: 100%; padding: 0.6rem 0.75rem; font: inherit; font-size: 0.95rem;
+      color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px;
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .send-btn {
+      background: var(--accent); color: var(--accent-ink); border: none; border-radius: 6px;
+      padding: 0.7rem 1.4rem; font: inherit; font-weight: 600; cursor: pointer;
+    }
+    .send-btn:hover { filter: brightness(1.08); }
+    .status { margin-top: 1rem; padding: 0.75rem 1rem; border-radius: 6px; background: var(--ok-bg); color: var(--ok); font-size: 0.9rem; display: none; }
+    .status.show { display: block; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .topics { list-style: none; }
+    .topics li { padding: 0.6rem 0; border-top: 1px solid var(--rule); font-size: 0.95rem; }
+    .topics strong { color: var(--ink); }
+
+    footer { border-top: 1px solid var(--rule); background: var(--surface); text-align: center; font-size: 0.85rem; color: var(--muted); }
+    footer a { color: var(--muted); margin: 0 0.5rem; }
+
+    @media (max-width: 520px) { .row { grid-template-columns: 1fr; } main { padding: 2rem 1rem; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← Back to home</a>
+</header>
+
+<main>
+  <h1>Contact us</h1>
+  <p class="intro">Have a question, found a mistake, or want to suggest a feature? We'd like to hear from you. We aim to reply within a few business days.</p>
+
+  <div class="email-card">
+    <div>
+      <div class="label">Email us directly</div>
+      <a href="mailto:ibos334@gmail.com">ibos334@gmail.com</a>
+    </div>
+    <button class="copy-btn" type="button" id="copy-btn">Copy address</button>
+  </div>
+
+  <form id="contact-form" novalidate>
+    <h2>Or write your message here</h2>
+    <p class="form-note">Sending opens your email app with your message filled in, ready to send. Nothing is stored on this site.</p>
+    <div class="row">
+      <div class="field">
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required/>
+      </div>
+      <div class="field">
+        <label for="topic">Topic</label>
+        <select id="topic" name="topic">
+          <option>General question</option>
+          <option>Report an error</option>
+          <option>Suggest a feature</option>
+          <option>Advertising or partnership</option>
+          <option>Privacy request</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+    <button class="send-btn" type="submit">Open in email app</button>
+    <div class="status" id="status" role="status"></div>
+  </form>
+
+  <h2>What you can contact us about</h2>
+  <ul class="topics">
+    <li><strong>Corrections.</strong> If a result, date or fact on the site looks wrong, tell us where you saw it and what you expected. We check every report.</li>
+    <li><strong>Suggestions.</strong> Ideas for new features, units, holidays or calculators are always welcome.</li>
+    <li><strong>Privacy.</strong> For questions about how this site handles data, see our <a href="privacy.html">Privacy Policy</a> or email us.</li>
+    <li><strong>Business enquiries.</strong> For advertising or partnership questions, choose that topic above so we can route your message.</li>
+  </ul>
+</main>
+
+<footer>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="disclaimer.html">Disclaimer</a>
+</footer>
+
+<script>
+  const EMAIL = 'ibos334@gmail.com';
+  const status = document.getElementById('status');
+  const say = msg => { status.textContent = msg; status.classList.add('show'); };
+
+  document.getElementById('copy-btn').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      say('Email address copied.');
+    } catch (e) {
+      say('Copy didn\u2019t work in this browser. The address is ' + EMAIL + '.');
+    }
+  });
+
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const topic = document.getElementById('topic').value;
+    const message = document.getElementById('message').value.trim();
+    if (!name || !message) {
+      say('Please add your name and a message before sending.');
+      (name ? document.getElementById('message') : document.getElementById('name')).focus();
+      return;
+    }
+    const subject = `${topic} from ${name}`;
+    const body = `${message}\n\n\u2014 ${name}`;
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    say(`Your email app should open now. If it doesn\u2019t, email us at ${EMAIL}.`);
+  });
+</script>
+</body>
+</html>
