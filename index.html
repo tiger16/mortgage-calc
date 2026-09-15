@@ -3,8 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Loan & Mortgage Calculator — Instant Monthly Payment Estimator</title>
-  <meta name="description" content="Free loan and mortgage calculator. Instantly estimate your monthly payment, total interest, and full amortization breakdown."/>
+  <title>Loan & Mortgage Calculator: Monthly Payment, Amortization & Extra Payments</title>
+  <meta name="description" content="Free loan and mortgage calculator with amortization schedule, extra-payment savings and loan comparison, plus the payment formula, rate tables and plain-English borrowing guides."/>
+  <meta name="robots" content="index, follow"/>
+  <!-- Replace YOUR-DOMAIN with your real domain -->
+  <link rel="canonical" href="https://YOUR-DOMAIN/"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Loan & Mortgage Calculator with Amortization Schedule"/>
+  <meta property="og:description" content="Estimate your monthly payment, see where your money goes, and compare loan offers."/>
+  <meta property="og:url" content="https://YOUR-DOMAIN/"/>
+  <!-- Google AdSense: paste your AdSense script tag here (from AdSense > Sites) -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,700;1,300&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,7 +20,9 @@
     :root {
       --ink:       #0f1117;
       --paper:     #f7f5f0;
-      --muted:     #8a8680;
+      --muted:     #6b675f;
+      --body:      #3f3c37;
+      --red:       #9b2c2c;
       --rule:      #dedad3;
       --accent:    #1a4f8a;
       --accent-lt: #e8eef7;
@@ -27,7 +37,9 @@
     body.dark {
       --ink:       #e8eaf0;
       --paper:     #0d0f14;
-      --muted:     #5a5f72;
+      --muted:     #9095a6;
+      --body:      #b9bdc9;
+      --red:       #f08080;
       --rule:      #252830;
       --accent:    #4a8fd4;
       --accent-lt: #1a2a3a;
@@ -66,7 +78,7 @@
     .hero-eyebrow { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem; }
     .hero h1 { font-family: var(--display); font-weight: 300; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
     .hero h1 em { font-style: italic; color: var(--accent); }
-    .hero-sub { margin-top: 1rem; font-size: 1rem; color: var(--muted); max-width: 480px; margin-left: auto; margin-right: auto; }
+    .hero-sub { margin-top: 1rem; font-size: 1rem; color: var(--body); max-width: 560px; margin-left: auto; margin-right: auto; }
 
     .main-wrap { max-width: 960px; margin: 0 auto; padding: 2rem 2rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
 
@@ -102,7 +114,7 @@
     .direct-input::-webkit-outer-spin-button,
     .direct-input::-webkit-inner-spin-button { -webkit-appearance: none; }
     .direct-input:focus { outline: none; border-color: var(--accent); }
-    .direct-input.invalid { border-color: #c0392b; color: #c0392b; }
+    .direct-input.invalid { border-color: var(--red); color: var(--red); }
     .direct-input-apply {
       padding: 0.3rem 0.7rem;
       background: var(--accent-lt);
@@ -137,7 +149,7 @@
     .stat-label { font-size: 0.72rem; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
     .stat-value { font-family: var(--mono); font-size: 1.15rem; font-weight: 500; color: var(--ink); }
     .stat-value.green { color: var(--green); }
-    .stat-value.red   { color: #9b2c2c; }
+    .stat-value.red   { color: var(--red); }
 
     .bar-section { padding: 1.5rem; border-bottom: 1px solid var(--rule); }
     .bar-title { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
@@ -164,7 +176,7 @@
     .extra-wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
     .extra-box { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 1.8rem 2rem; margin-bottom: 2.5rem; transition: background 0.25s, border-color 0.25s; }
     .extra-box h3 { font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--ink); }
-    .extra-box .extra-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .extra-box .extra-sub { font-size: 0.85rem; color: var(--body); margin-bottom: 1.25rem; }
     .extra-fields { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: end; }
     .extra-field label { display: block; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
     .extra-field input { width: 100%; padding: 0.55rem 0.8rem; background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; color: var(--ink); font-family: var(--mono); font-size: 0.95rem; transition: border-color 0.2s, background 0.25s; -moz-appearance: textfield; }
@@ -176,13 +188,14 @@
     .extra-result { margin-top: 1rem; padding: 1rem 1.2rem; border-radius: 3px; font-family: var(--mono); font-size: 0.82rem; display: none; line-height: 1.8; }
     .extra-result.show { display: block; }
     .extra-result.green { background: var(--green-lt); color: var(--green); border: 1px solid rgba(29,106,74,0.25); }
+    body.dark .compare-winner-badge { color: #0d0f14; }
     .extra-result .highlight { font-size: 1rem; font-weight: 500; }
 
     /* ── LOAN COMPARISON ── */
     .compare-wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
     .compare-box { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 1.8rem 2rem; margin-bottom: 3rem; transition: background 0.25s, border-color 0.25s; }
     .compare-box h3 { font-family: var(--display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; color: var(--ink); }
-    .compare-box .compare-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .compare-box .compare-sub { font-size: 0.85rem; color: var(--body); margin-bottom: 1.25rem; }
     .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
     .compare-col { background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; padding: 1.2rem; transition: background 0.25s, border-color 0.25s; }
     .compare-col-title { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
@@ -207,10 +220,122 @@
     .info-section { max-width: 960px; margin: 0 auto; padding: 2rem 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .info-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 1.5rem; transition: background 0.25s, border-color 0.25s; }
     .info-card h3 { font-family: var(--display); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: var(--ink); }
-    .info-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+    .info-card p { font-size: 0.85rem; color: var(--body); line-height: 1.65; }
 
     footer { border-top: 1px solid var(--rule); padding: 1.5rem 2rem; text-align: center; font-size: 0.75rem; color: var(--muted); font-family: var(--mono); transition: border-color 0.25s; }
     footer a { color: var(--muted); text-decoration: underline; }
+
+
+    /* ── ADDED: nav, content, a11y ── */
+    .site-nav { display: flex; gap: 1.1rem; margin-left: 1.5rem; }
+    .site-nav a { font-size: 0.82rem; color: var(--body); text-decoration: none; border-bottom: 1px solid transparent; padding: 0.15rem 0; }
+    .site-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .card-title { font-weight: 400; }
+    .field label .lbl-text { font-family: var(--body); font-size: 0.85rem; color: var(--ink); font-weight: 500; }
+    .input-error { color: var(--red); font-size: 0.8rem; min-height: 1.1em; margin-bottom: 0.2rem; }
+    .fine-print { font-size: 0.76rem; color: var(--muted); margin-top: 0.8rem; line-height: 1.5; }
+    .results-note { font-size: 0.76rem; color: var(--muted); margin-top: 0.8rem; line-height: 1.5; }
+    .table-scroll { overflow-x: auto; }
+    .show-more[aria-expanded="true"]::before { content: '▲ '; }
+    .show-more[aria-expanded="false"]::before { content: '▼ '; }
+    .tool-title { font-family: var(--display); font-weight: 700; font-size: 1.2rem; margin-bottom: 0.2rem; color: var(--ink); }
+    .extra-result.warn { background: var(--paper); color: var(--ink); border: 1px solid var(--rule); }
+    .compare-error { font-size: 0.85rem; color: var(--red); margin-top: 0.8rem; }
+    .compare-note { grid-column: 1 / -1; font-size: 0.8rem; color: var(--muted); }
+
+    .content { max-width: 960px; margin: 0 auto; padding: 0 2rem 2rem; }
+    .block { padding: 3rem 0 0.5rem; border-top: 1px solid var(--rule); margin-top: 2.5rem; scroll-margin-top: 1rem; }
+    .content > .block:first-child { margin-top: 0; }
+    .block > h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(1.6rem, 3.4vw, 2.1rem); line-height: 1.15; letter-spacing: -0.015em;
+      color: var(--ink); margin-bottom: 0.6rem;
+    }
+    .lede { font-size: 1rem; color: var(--body); line-height: 1.7; max-width: 66ch; margin-bottom: 1.8rem; }
+    .block h3 { font-family: var(--display); font-weight: 700; font-size: 1.08rem; color: var(--ink); margin: 0 0 0.45rem; }
+    .prose h3 { margin-top: 1.4rem; }
+    .prose h3:first-child { margin-top: 0; }
+    .block p { font-size: 0.92rem; color: var(--body); line-height: 1.75; }
+    .block p + p { margin-top: 0.75rem; }
+    .block strong { color: var(--ink); font-weight: 600; }
+    .block a { color: var(--accent); }
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 3rem; }
+    .two-col > * { min-width: 0; }
+
+    .formula-display { font-size: 1.3rem; margin: 0.8rem 0 1rem; padding: 1rem; background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; overflow-x: auto; color: var(--ink); }
+    .formula {
+      font-family: var(--mono); font-size: 0.8rem; line-height: 1.75; white-space: pre; overflow-x: auto;
+      background: var(--card-bg); border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+      border-radius: 4px; padding: 0.9rem 1.1rem; margin: 0.9rem 0; color: var(--ink);
+    }
+
+    .ref-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; margin: 0.8rem 0; }
+    .ref-table caption { text-align: left; font-family: var(--display); font-weight: 700; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.4rem; }
+    .ref-table th, .ref-table td { padding: 0.45rem 0.6rem; text-align: left; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+    .ref-table thead th { font-weight: 500; font-size: 0.74rem; color: var(--muted); border-bottom: 1.5px solid var(--ink); }
+    .ref-table tbody th { font-weight: 500; color: var(--ink); }
+    .ref-table td { font-family: var(--mono); color: var(--body); font-variant-numeric: tabular-nums; }
+    .ref-table tbody tr:last-child > * { border-bottom: none; }
+
+    .table-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+    .table-card { background: var(--card-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 1.4rem 1.5rem; min-width: 0; }
+    .table-card > p { font-size: 0.86rem; }
+    .sub-h { margin-top: 1.3rem !important; }
+    .table-note { font-size: 0.78rem !important; color: var(--muted) !important; }
+
+    .plain-list { list-style: none; margin: 0.6rem 0; }
+    .plain-list li { font-size: 0.92rem; color: var(--body); line-height: 1.7; padding: 0.45rem 0 0.45rem 1rem; position: relative; }
+    .plain-list li::before { content: ''; position: absolute; left: 0; top: 1.05rem; width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
+    .example-box { margin-top: 1.2rem; padding: 1rem 1.2rem; background: var(--accent-lt); border-radius: 4px; }
+    .example-box .formula { background: var(--card-bg); }
+    .example-title { font-family: var(--mono); font-size: 0.72rem !important; color: var(--accent) !important; }
+
+    .strategy-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 2rem; }
+    .strategy { padding: 1.2rem 0; border-top: 1px solid var(--rule); }
+    .strategy p { font-size: 0.88rem; }
+
+    .steps { list-style: none; counter-reset: s; max-width: 72ch; }
+    .steps li { counter-increment: s; position: relative; padding: 0 0 1.1rem 2.6rem; font-size: 0.92rem; color: var(--body); line-height: 1.7; }
+    .steps li::before {
+      content: counter(s); position: absolute; left: 0; top: 0.05rem;
+      width: 1.7rem; height: 1.7rem; border-radius: 50%;
+      border: 1.5px solid var(--accent); color: var(--accent);
+      font-family: var(--display); font-weight: 700; font-size: 0.85rem;
+      display: grid; place-items: center;
+    }
+
+    .glossary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2.5rem; }
+    .glossary > div { padding: 0.8rem 0; border-top: 1px solid var(--rule); }
+    .glossary dt { font-weight: 600; font-size: 0.9rem; color: var(--ink); margin-bottom: 0.15rem; }
+    .glossary dd { font-size: 0.86rem; color: var(--body); line-height: 1.6; }
+
+    .faq { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2.5rem; }
+    .faq-item { padding: 1.1rem 0; border-top: 1px solid var(--rule); }
+    .faq-item h3 { font-size: 1rem; }
+
+    .about-note p { font-size: 0.86rem; max-width: 75ch; }
+    .footer-links { margin-top: 0.4rem; }
+    .footer-links a { margin: 0 0.5rem; }
+
+    @media (max-width: 860px) {
+      .site-nav { display: none; }
+      .strategy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .table-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .content { padding: 0 1rem 1.5rem; }
+      .extra-wrap, .compare-wrap { padding: 0 1rem; }
+      .main-wrap { padding: 1.5rem 1rem 3rem; }
+      .main-wrap > * { min-width: 0; }
+      .card, .extra-box, .compare-box { padding: 1.4rem 1.2rem; }
+      .two-col, .strategy-grid, .glossary, .faq { grid-template-columns: minmax(0, 1fr); }
+      .logo-tag { display: none; }
+      .loan-type-row { flex-wrap: wrap; }
+      .type-btn { flex: 1 1 40%; }
+      .stat { padding: 1rem; }
+    }
 
     @media (max-width: 680px) {
       .main-wrap { grid-template-columns: 1fr; }
@@ -225,14 +350,21 @@
     @media (max-width: 420px) {
       .extra-fields { grid-template-columns: 1fr; }
     }
-    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
   </style>
 </head>
 <body>
 
 <header>
   <span class="logo">EasyLoanCalculator</span>
-  <span class="logo-tag">Free Mortgage & Loan Calculator</span>
+  <span class="logo-tag">Free Mortgage &amp; Loan Calculator</span>
+  <nav class="site-nav" aria-label="Page sections">
+    <a href="#calculator">Calculator</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#tables">Payment tables</a>
+    <a href="#guides">Guides</a>
+    <a href="#faq">FAQ</a>
+  </nav>
   <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" aria-label="Toggle dark mode">
     <span class="icon">🌙</span><span>Dark</span>
   </button>
@@ -241,84 +373,86 @@
 <section class="hero">
   <p class="hero-eyebrow">Mortgage · Personal · Auto · Student</p>
   <h1>Know your <em>exact</em> monthly payment<br>before you sign anything.</h1>
-  <p class="hero-sub">Type your numbers directly or use the sliders — instant breakdown with full amortization schedule.</p>
+  <p class="hero-sub">Type your numbers or use the sliders to see your payment, total interest and a full amortization schedule. Below the calculator, you'll find the formula, payment tables and plain-English guides.</p>
 </section>
 
-<div class="main-wrap">
+<div class="main-wrap" id="calculator">
 
   <!-- INPUT FORM -->
   <div class="card">
-    <p class="card-title">Loan Parameters</p>
+    <h2 class="card-title">Loan details</h2>
 
-    <div class="loan-type-row">
-      <button class="type-btn active" onclick="setType(this,'Mortgage')">Mortgage</button>
-      <button class="type-btn" onclick="setType(this,'Auto')">Auto</button>
-      <button class="type-btn" onclick="setType(this,'Personal')">Personal</button>
-      <button class="type-btn" onclick="setType(this,'Student')">Student</button>
+    <div class="loan-type-row" role="group" aria-label="Loan type">
+      <button class="type-btn active" onclick="setType(this,'Mortgage')" aria-pressed="true">Mortgage</button>
+      <button class="type-btn" onclick="setType(this,'Auto')" aria-pressed="false">Auto</button>
+      <button class="type-btn" onclick="setType(this,'Personal')" aria-pressed="false">Personal</button>
+      <button class="type-btn" onclick="setType(this,'Student')" aria-pressed="false">Student</button>
     </div>
 
     <div class="field">
-      <label>Loan Amount <span id="lbl-amount">$300,000</span></label>
+      <label for="rng-amount"><span class="lbl-text" id="amount-title">Home Price</span> <span id="lbl-amount">$300,000</span></label>
       <input type="range" id="rng-amount" min="5000" max="1500000" step="5000" value="300000" oninput="syncSlider('amount',this.value)" />
       <div class="range-bounds"><span>$5k</span><span>$1.5M</span></div>
       <div class="direct-input-row">
-        <input type="number" class="direct-input" id="inp-amount" placeholder="300000" aria-label="Loan amount"/>
+        <input type="number" class="direct-input" id="inp-amount" placeholder="300000" aria-label="Exact price or loan amount in dollars" inputmode="decimal"/>
         <button class="direct-input-apply" onclick="applyDirect('amount')">Apply</button>
-        <span class="direct-input-hint">type exact $</span>
+        <span class="direct-input-hint">exact $, up to $10M</span>
       </div>
     </div>
 
-    <div class="field">
-      <label>Interest Rate (APR) <span id="lbl-rate">6.5%</span></label>
-      <input type="range" id="rng-rate" min="0.5" max="20" step="0.1" value="6.5" oninput="syncSlider('rate',this.value)" />
-      <div class="range-bounds"><span>0.5%</span><span>20%</span></div>
-      <div class="direct-input-row">
-        <input type="number" class="direct-input" id="inp-rate" placeholder="6.5" step="0.01" aria-label="Interest rate"/>
-        <button class="direct-input-apply" onclick="applyDirect('rate')">Apply</button>
-        <span class="direct-input-hint">% APR</span>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Loan Term <span id="lbl-term">30 years</span></label>
-      <input type="range" id="rng-term" min="1" max="30" step="1" value="30" oninput="syncSlider('term',this.value)" />
-      <div class="range-bounds"><span>1 yr</span><span>30 yrs</span></div>
-      <div class="direct-input-row">
-        <input type="number" class="direct-input" id="inp-term" placeholder="30" aria-label="Loan term in years"/>
-        <button class="direct-input-apply" onclick="applyDirect('term')">Apply</button>
-        <span class="direct-input-hint">years (1–30)</span>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Down Payment <span id="lbl-down">$60,000</span></label>
+    <div class="field" id="field-down">
+      <label for="rng-down"><span class="lbl-text">Down Payment</span> <span id="lbl-down">$60,000</span></label>
       <input type="range" id="rng-down" min="0" max="500000" step="1000" value="60000" oninput="syncSlider('down',this.value)" />
       <div class="range-bounds"><span>$0</span><span>$500k</span></div>
       <div class="direct-input-row">
-        <input type="number" class="direct-input" id="inp-down" placeholder="60000" aria-label="Down payment"/>
+        <input type="number" class="direct-input" id="inp-down" placeholder="60000" aria-label="Exact down payment in dollars" inputmode="decimal"/>
         <button class="direct-input-apply" onclick="applyDirect('down')">Apply</button>
-        <span class="direct-input-hint">type exact $</span>
+        <span class="direct-input-hint" id="down-pct">20% of price</span>
       </div>
     </div>
 
-    <button class="calc-btn" onclick="calculate()">Calculate Payment →</button>
+    <div class="field">
+      <label for="rng-rate"><span class="lbl-text">Interest Rate</span> <span id="lbl-rate">6.5%</span></label>
+      <input type="range" id="rng-rate" min="0" max="20" step="0.125" value="6.5" oninput="syncSlider('rate',this.value)" />
+      <div class="range-bounds"><span>0%</span><span>20%</span></div>
+      <div class="direct-input-row">
+        <input type="number" class="direct-input" id="inp-rate" placeholder="6.5" step="0.001" aria-label="Exact annual interest rate in percent" inputmode="decimal"/>
+        <button class="direct-input-apply" onclick="applyDirect('rate')">Apply</button>
+        <span class="direct-input-hint">annual %, up to 40</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="rng-term"><span class="lbl-text">Loan Term</span> <span id="lbl-term">30 years</span></label>
+      <input type="range" id="rng-term" min="1" max="30" step="1" value="30" oninput="syncSlider('term',this.value)" />
+      <div class="range-bounds"><span>1 yr</span><span>30 yrs</span></div>
+      <div class="direct-input-row">
+        <input type="number" class="direct-input" id="inp-term" placeholder="30" step="0.5" aria-label="Exact loan term in years" inputmode="decimal"/>
+        <button class="direct-input-apply" onclick="applyDirect('term')">Apply</button>
+        <span class="direct-input-hint">years, 1–40</span>
+      </div>
+    </div>
+
+    <p class="input-error" id="input-error" role="alert"></p>
+    <button class="calc-btn" onclick="calculate()">Calculate payment</button>
+    <p class="fine-print">Enter the loan's interest rate, not its APR. APR includes fees, so using it here would slightly overstate your payment.</p>
   </div>
 
   <!-- RESULTS -->
   <div class="results-card" id="results">
     <div class="results-header">
-      <div class="label">Monthly Payment</div>
-      <div class="monthly" id="res-monthly">$1,517</div>
-      <div class="monthly-note" id="res-note">30-year mortgage · 6.5% APR</div>
+      <div class="label">Monthly payment (principal &amp; interest)</div>
+      <div class="monthly" id="res-monthly" aria-live="polite">$1,516.96</div>
+      <div class="monthly-note" id="res-note">30-year mortgage · 6.5% interest</div>
     </div>
     <div class="stats-grid">
       <div class="stat"><div class="stat-label">Loan Amount</div><div class="stat-value" id="res-principal">$240,000</div></div>
-      <div class="stat"><div class="stat-label">Total Interest</div><div class="stat-value red" id="res-interest">$306,120</div></div>
-      <div class="stat"><div class="stat-label">Total Cost</div><div class="stat-value" id="res-total">$546,120</div></div>
-      <div class="stat"><div class="stat-label">Payoff Date</div><div class="stat-value green" id="res-payoff">Jun 2055</div></div>
+      <div class="stat"><div class="stat-label">Total Interest</div><div class="stat-value red" id="res-interest">$306,107</div></div>
+      <div class="stat"><div class="stat-label">Total of Payments</div><div class="stat-value" id="res-total">$546,107</div></div>
+      <div class="stat"><div class="stat-label">Payoff Date</div><div class="stat-value green" id="res-payoff">—</div></div>
     </div>
     <div class="bar-section">
-      <div class="bar-title">Principal vs. Interest</div>
+      <div class="bar-title">Principal vs. interest</div>
       <div class="bar-wrap">
         <div class="bar-principal" id="bar-p" style="width:44%"></div>
         <div class="bar-interest"  id="bar-i" style="width:56%"></div>
@@ -327,14 +461,20 @@
         <div class="leg"><div class="leg-dot p"></div><span id="leg-p">Principal 44%</span></div>
         <div class="leg"><div class="leg-dot i"></div><span id="leg-i">Interest 56%</span></div>
       </div>
+      <p class="results-note" id="res-insight">Your first payment is about 86% interest. Principal overtakes interest in year 20.</p>
     </div>
     <div class="amort-section">
-      <div class="amort-title">Amortization Schedule (first 5 years)</div>
+      <div class="amort-title" id="amort-title">Amortization schedule (first 5 years)</div>
+      <div class="table-scroll">
       <table class="amort-table">
-        <thead><tr><th>Year</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead>
-        <tbody id="amort-body"></tbody>
+        <thead><tr><th scope="col">Year</th><th scope="col">Principal</th><th scope="col">Interest</th><th scope="col">Balance</th></tr></thead>
+        <tbody id="amort-body">
+          <tr><td>1</td><td>$2,683</td><td>$15,521</td><td>$237,317</td></tr>
+        </tbody>
       </table>
-      <button class="show-more" onclick="toggleAmort()">▼ Show full schedule</button>
+      </div>
+      <button class="show-more" onclick="toggleAmort()" aria-expanded="false">Show full schedule</button>
+      <p class="results-note">Estimates only. Doesn't include property taxes, insurance, mortgage insurance, HOA dues or lender fees. Payoff date assumes the first payment is due next month.</p>
     </div>
   </div>
 </div>
@@ -342,125 +482,410 @@
 <!-- EXTRA PAYMENT CALCULATOR -->
 <div class="extra-wrap">
   <div class="extra-box">
-    <h3>Extra Payment Savings Calculator</h3>
-    <p class="extra-sub">See how much time and money you save by paying a little extra each month — uses your current loan above.</p>
+    <h2 class="tool-title">Extra payment savings calculator</h2>
+    <p class="extra-sub">See how much time and interest you save by paying extra toward principal. Uses the loan in the calculator above and updates when you change it.</p>
     <div class="extra-fields">
       <div class="extra-field">
-        <label for="extra-monthly">Extra Monthly Payment ($)</label>
-        <input type="number" id="extra-monthly" placeholder="e.g. 200" min="0"/>
+        <label for="extra-monthly">Extra each month ($)</label>
+        <input type="number" id="extra-monthly" placeholder="e.g. 200" min="0" inputmode="decimal"/>
       </div>
       <div class="extra-field">
-        <label for="extra-lump">One-Time Lump Sum ($)</label>
-        <input type="number" id="extra-lump" placeholder="e.g. 5000" min="0"/>
+        <label for="extra-lump">One-time lump sum now ($)</label>
+        <input type="number" id="extra-lump" placeholder="e.g. 5000" min="0" inputmode="decimal"/>
       </div>
-      <button class="extra-calc-btn" onclick="calcExtra()">Calculate Savings</button>
+      <button class="extra-calc-btn" onclick="calcExtra()">Calculate savings</button>
     </div>
-    <div class="extra-result" id="extra-result"></div>
+    <div class="extra-result" id="extra-result" aria-live="polite"></div>
   </div>
 </div>
 
 <!-- LOAN COMPARISON -->
 <div class="compare-wrap">
   <div class="compare-box">
-    <h3>Side-by-Side Loan Comparison</h3>
-    <p class="compare-sub">Compare two loan offers to see which actually costs less over the full term.</p>
+    <h2 class="tool-title">Side-by-side loan comparison</h2>
+    <p class="compare-sub">Compare two loan offers for the same amount to see which one costs less over its full term.</p>
     <div class="compare-grid">
       <div class="compare-col">
         <div class="compare-col-title">Loan A</div>
-        <div class="compare-field"><label>Amount ($)</label><input type="number" id="cmp-a-amount" value="300000"/></div>
-        <div class="compare-field"><label>Rate (% APR)</label><input type="number" id="cmp-a-rate" value="6.5" step="0.01"/></div>
-        <div class="compare-field"><label>Term (years)</label><input type="number" id="cmp-a-term" value="30"/></div>
+        <div class="compare-field"><label for="cmp-a-amount">Amount ($)</label><input type="number" id="cmp-a-amount" value="300000"/></div>
+        <div class="compare-field"><label for="cmp-a-rate">Interest rate (%)</label><input type="number" id="cmp-a-rate" value="6.5" step="0.001"/></div>
+        <div class="compare-field"><label for="cmp-a-term">Term (years)</label><input type="number" id="cmp-a-term" value="30"/></div>
+        <div class="compare-field"><label for="cmp-a-fees">Upfront fees / points ($)</label><input type="number" id="cmp-a-fees" value="0"/></div>
       </div>
       <div class="compare-col">
         <div class="compare-col-title">Loan B</div>
-        <div class="compare-field"><label>Amount ($)</label><input type="number" id="cmp-b-amount" value="300000"/></div>
-        <div class="compare-field"><label>Rate (% APR)</label><input type="number" id="cmp-b-rate" value="7.0" step="0.01"/></div>
-        <div class="compare-field"><label>Term (years)</label><input type="number" id="cmp-b-term" value="30"/></div>
+        <div class="compare-field"><label for="cmp-b-amount">Amount ($)</label><input type="number" id="cmp-b-amount" value="300000"/></div>
+        <div class="compare-field"><label for="cmp-b-rate">Interest rate (%)</label><input type="number" id="cmp-b-rate" value="6.25" step="0.001"/></div>
+        <div class="compare-field"><label for="cmp-b-term">Term (years)</label><input type="number" id="cmp-b-term" value="30"/></div>
+        <div class="compare-field"><label for="cmp-b-fees">Upfront fees / points ($)</label><input type="number" id="cmp-b-fees" value="3000"/></div>
       </div>
     </div>
-    <button class="compare-btn" onclick="calcCompare()">Compare Loans →</button>
-    <div class="compare-result" id="compare-result"></div>
+    <button class="compare-btn" onclick="calcCompare()">Compare loans</button>
+    <div class="compare-result" id="compare-result" aria-live="polite"></div>
   </div>
 </div>
 
-<!-- INFO CARDS -->
-<section class="info-section">
-  <div class="info-card">
-    <h3>How is my payment calculated?</h3>
-    <p>Your monthly payment uses the standard amortization formula, factoring in your loan principal, annual interest rate (APR), and loan term in months. Each payment covers accrued interest first, then reduces the outstanding balance.</p>
-  </div>
-  <div class="info-card">
-    <h3>What's a good interest rate?</h3>
-    <p>Rates depend on the loan type, your credit score, and market conditions. Borrowers with excellent credit (740+) typically qualify for significantly lower rates. Even a 0.5% difference on a 30-year mortgage can save tens of thousands.</p>
-  </div>
-  <div class="info-card">
-    <h3>Should I pay extra each month?</h3>
-    <p>Even small extra payments toward principal can dramatically shorten your loan term and reduce total interest paid. Use the Extra Payment Calculator above to see exactly how much you'd save.</p>
+<noscript>
+  <div class="content"><p class="lede"><strong>The calculators need JavaScript.</strong> The formula, payment tables and guides below work without it.</p></div>
+</noscript>
+
+<div class="content">
+
+<!-- HOW IT WORKS -->
+<section class="block" id="how-it-works">
+  <h2>How your monthly payment is calculated</h2>
+  <p class="lede">Almost every fixed-rate mortgage, auto loan and personal loan uses the same amortization formula. Knowing how it works makes it much easier to judge a loan offer.</p>
+
+  <div class="two-col">
+    <div class="prose">
+      <h3>The formula</h3>
+      <div class="formula-display">
+        <math display="block" aria-label="M equals P times r times one plus r to the n, over one plus r to the n minus one">
+          <mi>M</mi><mo>=</mo>
+          <mi>P</mi><mo>×</mo>
+          <mfrac>
+            <mrow><mi>r</mi><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>n</mi></msup></mrow>
+            <mrow><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>r</mi><mo>)</mo></mrow><mi>n</mi></msup><mo>−</mo><mn>1</mn></mrow>
+          </mfrac>
+        </math>
+      </div>
+      <p><strong>M</strong> is the monthly payment and <strong>P</strong> is the amount borrowed. <strong>r</strong> is the monthly interest rate, the annual rate divided by 12. <strong>n</strong> is the number of monthly payments, the term in years times 12. If the rate is 0%, the payment is simply P ÷ n.</p>
+      <h3>A worked example</h3>
+      <p>Take a $300,000 home with a $60,000 down payment, so P = $240,000, at 6.5% for 30 years.</p>
+      <div class="formula">r = 0.065 ÷ 12 = 0.0054167
+n = 30 × 12   = 360
+(1 + r)ⁿ      = 6.9918
+
+M = 240,000 × (0.0054167 × 6.9918) ÷ (6.9918 − 1)
+  = $1,516.96 per month</div>
+      <p>Over 360 payments, that adds up to $546,107, of which $306,107 is interest: more than the original loan.</p>
+    </div>
+    <div class="prose">
+      <h3>Why early payments are mostly interest</h3>
+      <p>Each month, interest is charged on the balance you still owe, and whatever is left of the payment reduces that balance. In month one of the example, interest is $240,000 × 0.0054167 = <strong>$1,300.00</strong>, so only <strong>$216.96</strong> goes toward the loan.</p>
+      <p>As the balance falls, the interest portion shrinks and the principal portion grows, while the payment itself never changes. In this example, the principal portion doesn't overtake interest until <strong>payment 233</strong>, more than 19 years in.</p>
+      <div class="table-scroll">
+        <table class="ref-table">
+          <caption>Remaining balance on the example loan</caption>
+          <thead><tr><th scope="col">After</th><th scope="col">Balance owed</th><th scope="col">Paid off</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">5 years</th><td>$224,666</td><td>6%</td></tr>
+            <tr><th scope="row">10 years</th><td>$203,463</td><td>15%</td></tr>
+            <tr><th scope="row">15 years</th><td>$174,142</td><td>27%</td></tr>
+            <tr><th scope="row">20 years</th><td>$133,597</td><td>44%</td></tr>
+            <tr><th scope="row">30 years</th><td>$0</td><td>100%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>This is why selling or refinancing within the first few years leaves most of the original balance still owed, and why extra payments made early save the most.</p>
+    </div>
   </div>
 </section>
 
-<!-- ── LOAN TYPE GUIDE ── -->
-<section style="max-width:960px;margin:0 auto;padding:1rem 2rem 3rem;">
-  <p style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem;border-bottom:1px solid var(--rule);padding-bottom:0.75rem;">Guide</p>
-  <h2 style="font-family:var(--display);font-weight:700;font-size:1.6rem;margin-bottom:1.2rem;color:var(--ink);">Understanding the Four Loan Types</h2>
+<!-- TABLES -->
+<section class="block" id="tables">
+  <h2>Payment tables</h2>
+  <p class="lede">Quick reference figures for principal and interest, calculated with the formula above. Real offers will differ with fees, taxes and insurance.</p>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2.5rem;">
-    <div>
-      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Mortgage</h3>
-      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Mortgages are secured against the home itself, which is why they carry longer terms (commonly 15 or 30 years) and lower rates than unsecured debt. Most lenders expect a down payment of at least 3–20% of the purchase price; putting down less than 20% often triggers private mortgage insurance (PMI), an added monthly cost until you build enough equity.</p>
+  <div class="table-grid">
+    <div class="table-card">
+      <h3>Monthly payment per $100,000 borrowed</h3>
+      <p>Multiply by your loan amount in hundreds of thousands. For example, a $250,000 loan at 6.5% over 30 years is 2.5 × $632.07, or about $1,580.</p>
+      <div class="table-scroll">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Rate</th><th scope="col">15-year</th><th scope="col">30-year</th><th scope="col">30-yr total interest</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">3.0%</th><td>$690.58</td><td>$421.60</td><td>$51,777</td></tr>
+            <tr><th scope="row">4.0%</th><td>$739.69</td><td>$477.42</td><td>$71,870</td></tr>
+            <tr><th scope="row">5.0%</th><td>$790.79</td><td>$536.82</td><td>$93,256</td></tr>
+            <tr><th scope="row">5.5%</th><td>$817.08</td><td>$567.79</td><td>$104,404</td></tr>
+            <tr><th scope="row">6.0%</th><td>$843.86</td><td>$599.55</td><td>$115,838</td></tr>
+            <tr><th scope="row">6.5%</th><td>$871.11</td><td>$632.07</td><td>$127,544</td></tr>
+            <tr><th scope="row">7.0%</th><td>$898.83</td><td>$665.30</td><td>$139,509</td></tr>
+            <tr><th scope="row">7.5%</th><td>$927.01</td><td>$699.21</td><td>$151,717</td></tr>
+            <tr><th scope="row">8.0%</th><td>$955.65</td><td>$733.76</td><td>$164,155</td></tr>
+            <tr><th scope="row">9.0%</th><td>$1,014.27</td><td>$804.62</td><td>$189,664</td></tr>
+            <tr><th scope="row">10.0%</th><td>$1,074.61</td><td>$877.57</td><td>$215,926</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div>
-      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Auto Loan</h3>
-      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Auto loans are also secured — this time against the vehicle — and typically run 3 to 7 years. Shorter terms mean higher monthly payments but noticeably less interest paid overall, since the balance shrinks faster and the car depreciates less than the loan term would otherwise assume.</p>
-    </div>
-    <div>
-      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Personal Loan</h3>
-      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Personal loans are usually unsecured, meaning there's no collateral backing them — which is why they tend to carry the highest rates of the four types here. Terms are short (2–7 years), and approval leans heavily on credit score and income rather than an asset's value.</p>
-    </div>
-    <div>
-      <h3 style="font-family:var(--display);font-weight:700;font-size:1rem;margin-bottom:0.4rem;color:var(--accent);">Student Loan</h3>
-      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;">Student loans often have longer repayment windows (10+ years) and, for federal loans in particular, come with borrower protections like income-driven repayment or deferment that this simple calculator does not model. Always check your loan servicer's terms before assuming a fixed monthly figure.</p>
-    </div>
-  </div>
 
-  <h2 style="font-family:var(--display);font-weight:700;font-size:1.6rem;margin-bottom:1.2rem;color:var(--ink);">Glossary of Terms Used in This Calculator</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.9rem 2rem;margin-bottom:2.5rem;">
-    <div><strong style="font-size:0.85rem;color:var(--ink);">Principal</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The amount you actually borrow — the loan amount minus any down payment.</p></div>
-    <div><strong style="font-size:0.85rem;color:var(--ink);">APR</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Annual Percentage Rate — the yearly cost of the loan expressed as a percentage, used here to derive the monthly rate.</p></div>
-    <div><strong style="font-size:0.85rem;color:var(--ink);">Amortization</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The process of paying off a loan in fixed installments, where early payments are mostly interest and later payments are mostly principal.</p></div>
-    <div><strong style="font-size:0.85rem;color:var(--ink);">Term</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The length of time you have to repay the loan in full, usually expressed in years.</p></div>
-    <div><strong style="font-size:0.85rem;color:var(--ink);">Down Payment</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Money paid upfront that reduces the amount you need to borrow — and often improves your rate.</p></div>
-    <div><strong style="font-size:0.85rem;color:var(--ink);">Total Interest</strong><p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">The total cost of borrowing over the full term — everything paid beyond the original principal.</p></div>
-  </div>
+    <div class="table-card">
+      <h3>How the rate changes a $300,000, 30-year loan</h3>
+      <p>Each half-point adds roughly $100 a month and $34,000 or more in interest over the life of the loan.</p>
+      <div class="table-scroll">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Rate</th><th scope="col">Monthly</th><th scope="col">Total interest</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">5.5%</th><td>$1,703.37</td><td>$313,212</td></tr>
+            <tr><th scope="row">6.0%</th><td>$1,798.65</td><td>$347,515</td></tr>
+            <tr><th scope="row">6.5%</th><td>$1,896.20</td><td>$382,633</td></tr>
+            <tr><th scope="row">7.0%</th><td>$1,995.91</td><td>$418,527</td></tr>
+            <tr><th scope="row">7.5%</th><td>$2,097.64</td><td>$455,152</td></tr>
+            <tr><th scope="row">8.0%</th><td>$2,201.29</td><td>$492,466</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="sub-h">How the term changes it, at 6.5%</h3>
+      <div class="table-scroll">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Term</th><th scope="col">Monthly</th><th scope="col">Total interest</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">10 years</th><td>$3,406.44</td><td>$108,773</td></tr>
+            <tr><th scope="row">15 years</th><td>$2,613.32</td><td>$170,398</td></tr>
+            <tr><th scope="row">20 years</th><td>$2,236.72</td><td>$236,813</td></tr>
+            <tr><th scope="row">25 years</th><td>$2,025.62</td><td>$307,686</td></tr>
+            <tr><th scope="row">30 years</th><td>$1,896.20</td><td>$382,633</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <h2 style="font-family:var(--display);font-weight:700;font-size:1.6rem;margin-bottom:1.2rem;color:var(--ink);">Frequently Asked Questions</h2>
-  <div style="display:flex;flex-direction:column;gap:1.2rem;">
-    <div>
-      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Does this calculator give me an official loan offer?</h3>
-      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">No. This tool provides an estimate based on the numbers you enter. Actual loan offers depend on a full underwriting process, including your credit history, income verification, and lender-specific fees that aren't reflected here.</p>
+    <div class="table-card">
+      <h3>What extra payments save</h3>
+      <p>The example loan: $240,000 at 6.5% over 30 years, $1,516.96 a month, with $306,107 in total interest.</p>
+      <div class="table-scroll">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Extra paid</th><th scope="col">Paid off sooner by</th><th scope="col">Interest saved</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">$50 / month</th><td>2 yrs 8 mo</td><td>$32,748</td></tr>
+            <tr><th scope="row">$100 / month</th><td>4 yrs 10 mo</td><td>$58,351</td></tr>
+            <tr><th scope="row">$200 / month</th><td>8 yrs 2 mo</td><td>$96,270</td></tr>
+            <tr><th scope="row">$500 / month</th><td>14 yrs 0 mo</td><td>$159,920</td></tr>
+            <tr><th scope="row">$10,000 once, at the start</th><td>3 yrs 5 mo</td><td>$52,584</td></tr>
+            <tr><th scope="row">One extra payment a year</th><td>5 yrs 10 mo</td><td>$69,805</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">"One extra payment a year" is modelled as $126.41 added each month, which is one-twelfth of a payment. This is roughly what a biweekly payment plan achieves.</p>
     </div>
-    <div>
-      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Why is my real payment higher than the estimate here?</h3>
-      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">Real-world payments often include extras this calculator doesn't model: property taxes and homeowners insurance (for mortgages, often bundled into an escrow payment), PMI, origination fees, or a variable rate that changes over time. Treat this figure as principal-and-interest only.</p>
-    </div>
-    <div>
-      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Fixed rate vs. variable rate — which does this calculator assume?</h3>
-      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">This calculator assumes a fixed rate for the full term. Adjustable-rate loans (ARMs) change after an initial period, so the schedule shown here would only apply to the fixed portion of an ARM.</p>
-    </div>
-    <div>
-      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">How much does an extra payment really save?</h3>
-      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">Because interest is calculated on the remaining balance each month, extra principal payments made early in the loan have an outsized effect — they reduce the balance interest accrues on for every remaining month. Use the Extra Payment Calculator above with your own numbers to see the exact effect.</p>
-    </div>
-    <div>
-      <h3 style="font-size:0.9rem;color:var(--ink);margin-bottom:0.3rem;">Is a longer or shorter term better?</h3>
-      <p style="font-size:0.83rem;color:var(--muted);line-height:1.65;">A shorter term means higher monthly payments but substantially less total interest, since the balance is paid down faster. A longer term lowers the monthly payment but increases the total cost of the loan. The Loan Comparison tool above can show the trade-off side by side.</p>
+
+    <div class="table-card">
+      <h3>Auto loan: $30,000 at 7%</h3>
+      <p>Longer terms lower the payment, but they cost more interest and keep you owing more than the car is worth for longer.</p>
+      <div class="table-scroll">
+        <table class="ref-table">
+          <thead><tr><th scope="col">Term</th><th scope="col">Monthly</th><th scope="col">Total interest</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">36 months</th><td>$926.31</td><td>$3,347</td></tr>
+            <tr><th scope="row">48 months</th><td>$718.39</td><td>$4,483</td></tr>
+            <tr><th scope="row">60 months</th><td>$594.04</td><td>$5,642</td></tr>
+            <tr><th scope="row">72 months</th><td>$511.47</td><td>$6,826</td></tr>
+            <tr><th scope="row">84 months</th><td>$452.78</td><td>$8,034</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- TRUE COST -->
+<section class="block" id="guides">
+  <h2>What the monthly payment doesn't show</h2>
+  <p class="lede">The figure above covers principal and interest only. Here's what else usually goes into the real cost of a loan, especially a mortgage.</p>
+  <div class="two-col">
+    <div class="prose">
+      <h3>The rest of a mortgage payment</h3>
+      <p>Lenders often describe a full housing payment as <strong>PITI</strong>: principal, interest, taxes and insurance. Property taxes and homeowners insurance are frequently collected monthly into an <strong>escrow account</strong>, and the lender pays the bills when they're due. Depending on the loan, you may also pay:</p>
+      <ul class="plain-list">
+        <li><strong>Mortgage insurance.</strong> Conventional loans with less than 20% down usually require private mortgage insurance (PMI). FHA loans have their own mortgage insurance premium (MIP), with different rules.</li>
+        <li><strong>HOA or condo fees.</strong> These are paid separately, but lenders count them when deciding what you can afford.</li>
+        <li><strong>Flood or other required insurance</strong> in some areas.</li>
+      </ul>
+      <div class="example-box">
+        <p class="example-title">Illustrative example, not a local estimate</p>
+        <div class="formula">Principal &amp; interest        $1,516.96
+Property tax ($4,200/yr)       $350.00
+Home insurance ($1,800/yr)     $150.00
+PMI ($100/mo)                  $100.00
+─────────────────────────────────────
+Estimated monthly total      $2,116.96</div>
+        <p>Taxes and insurance vary widely by location and property, so check real figures on your Loan Estimate.</p>
+      </div>
+    </div>
+    <div class="prose">
+      <h3>Interest rate vs. APR</h3>
+      <p>The <strong>interest rate</strong> determines your monthly payment. The <strong>annual percentage rate (APR)</strong> adds most lender fees and discount points to the interest cost and expresses the total as a yearly rate. That makes APR the better number for comparing offers, while the interest rate is the one to enter in this calculator.</p>
+      <h3>Discount points and closing costs</h3>
+      <p>A discount point costs 1% of the loan amount and lowers your rate by an amount the lender sets. Whether points pay off depends on how long you keep the loan. Divide the cost of the points by the monthly savings to find your break-even point in months. The comparison tool above includes an upfront-fees field so you can test this.</p>
+      <p>Closing costs also include items such as appraisal, title and origination fees. These don't change your monthly payment unless you roll them into the loan, but they are part of what the loan really costs you.</p>
+      <h3>How mortgage insurance ends</h3>
+      <p>For most conventional loans, the federal Homeowners Protection Act lets you ask to cancel PMI once your balance is scheduled to reach 80% of the home's original value, and requires it to end automatically at 78%, as long as you're current on payments. FHA mortgage insurance follows separate rules, and on many FHA loans it lasts for the life of the loan unless you refinance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AFFORDABILITY -->
+<section class="block" id="affordability">
+  <h2>How much can you comfortably borrow?</h2>
+  <div class="two-col">
+    <div class="prose">
+      <p>Lenders look closely at your <strong>debt-to-income ratio (DTI)</strong>: your monthly debt payments divided by your gross (pre-tax) monthly income. A traditional guideline is the <strong>28/36 rule</strong>. It suggests keeping housing costs at or below 28% of gross income, and all debt payments, housing included, at or below 36%.</p>
+      <p>Many loan programs approve higher ratios, but being approved for a payment doesn't mean it fits your budget. Lenders don't see childcare, savings goals or how stable your income is.</p>
+      <div class="formula">Gross monthly income           $8,000
+Housing at 28%          ≤      $2,240
+All debts at 36%        ≤      $2,880
+→ with a $400 car payment,
+  housing room is about        $2,480
+  but the 28% line caps it at  $2,240</div>
+    </div>
+    <div class="prose">
+      <h3>Questions to ask yourself first</h3>
+      <ul class="plain-list">
+        <li><strong>Could you still pay if your income dropped?</strong> Many advisers suggest keeping several months of expenses in an emergency fund on top of your down payment and closing costs.</li>
+        <li><strong>How long will you keep the loan?</strong> If you're likely to move or refinance within a few years, a lower rate from paying points may never pay back its cost.</li>
+        <li><strong>Is the rate fixed?</strong> With an adjustable rate, work out the payment at the highest rate the loan's caps allow, not just the starting rate.</li>
+        <li><strong>What's the total cost, not just the payment?</strong> A longer term can make almost anything look affordable monthly while adding tens of thousands in interest.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGIES -->
+<section class="block" id="strategies">
+  <h2>Ways to pay less interest</h2>
+  <div class="strategy-grid">
+    <div class="strategy">
+      <h3>Pay extra toward principal</h3>
+      <p>Any amount above your required payment reduces the balance that future interest is charged on. Tell your servicer to apply it to principal, and check that your loan has no prepayment penalty. Extra payments shorten the loan; your required monthly payment stays the same.</p>
+    </div>
+    <div class="strategy">
+      <h3>Make biweekly payments</h3>
+      <p>Paying half your monthly payment every two weeks adds up to 26 half-payments, the equivalent of 13 monthly payments a year. Many lenders let you make the extra payment directly, so avoid third-party services that charge a fee for the same result.</p>
+    </div>
+    <div class="strategy">
+      <h3>Choose a shorter term</h3>
+      <p>On a $300,000 loan at 6.5%, a 15-year term costs $717 more a month than a 30-year term but saves over $212,000 in interest. Shorter terms often come with lower rates too, which widens the gap.</p>
+    </div>
+    <div class="strategy">
+      <h3>Refinance when the numbers work</h3>
+      <p>Divide your closing costs by the monthly savings to get the break-even point: $6,000 in costs ÷ $150 saved a month = 40 months. Starting a new 30-year term can raise your total interest even at a lower rate, so compare the total cost as well as the payment.</p>
+    </div>
+    <div class="strategy">
+      <h3>Recast after a lump sum</h3>
+      <p>Some lenders will "recast" a mortgage after a large principal payment, usually for a fee. They recalculate your payment over the remaining term, which lowers the monthly payment instead of shortening the loan.</p>
+    </div>
+    <div class="strategy">
+      <h3>Improve your credit before applying</h3>
+      <p>Your credit score is one of the biggest factors in the rate you're offered. Paying down card balances and fixing report errors a few months before you apply can make a noticeable difference to your offers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOAN TYPES -->
+<section class="block" id="loan-types">
+  <h2>Understanding the four loan types</h2>
+  <div class="two-col">
+    <div class="prose">
+      <h3>Mortgage</h3>
+      <p>A mortgage is secured by the home, which is why it has long terms (usually 15 or 30 years) and lower rates than unsecured debt. Minimum down payments range from 0% for VA and USDA loans, to around 3% for some conventional loans and 3.5% for FHA loans. Putting down less than 20% on a conventional loan usually means paying PMI. This calculator models a <strong>fixed-rate</strong> mortgage.</p>
+      <p><strong>Fixed vs. adjustable.</strong> An adjustable-rate mortgage (ARM) starts with a fixed rate for a set period and then adjusts at regular intervals based on a market index. A 5/6 ARM, for example, is fixed for five years and then adjusts every six months. Caps limit each adjustment and the lifetime increase. For an ARM, this calculator's schedule is only accurate for the initial fixed period.</p>
+    </div>
+    <div class="prose">
+      <h3>Auto loan</h3>
+      <p>An auto loan is secured by the vehicle and typically runs 3 to 7 years. Cars lose value quickly, so a long loan with a small down payment can leave you owing more than the car is worth, known as <strong>negative equity</strong>. That becomes a problem if you sell, trade in or total the car. A shorter term or larger down payment reduces that risk.</p>
+      <h3>Personal loan</h3>
+      <p>Most personal loans are unsecured, with no collateral behind them. That's why their rates are usually higher than mortgage or auto rates and depend heavily on your credit and income. Terms are typically 1 to 7 years. Check for an origination fee, which is often deducted from the amount you receive.</p>
+      <h3>Student loan</h3>
+      <p>Federal student loans have fixed rates set for each school year, and the standard repayment plan has traditionally run for 10 years. They also come with options such as income-driven repayment, deferment and forbearance, which this calculator doesn't model. Federal repayment plans have changed several times in recent years, so check <a href="https://studentaid.gov" rel="noopener">studentaid.gov</a> or your servicer for current terms. Private student loans work more like personal loans, and their rates depend on your credit.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="block" id="checklist">
+  <h2>Before you sign: a checklist</h2>
+  <ol class="steps">
+    <li><strong>Get several quotes on the same day.</strong> Rates change daily, so comparing offers from different days can be misleading. For mortgages, a lender must give you a standard <em>Loan Estimate</em> within three business days of your application, which makes offers easy to compare line by line.</li>
+    <li><strong>Compare the APR and the total cost</strong>, not just the monthly payment. Use the comparison tool above and include each offer's upfront fees.</li>
+    <li><strong>Check for a prepayment penalty</strong>, so you know whether extra payments or an early payoff will cost you.</li>
+    <li><strong>Ask how long the rate lock lasts</strong> and what happens if closing is delayed.</li>
+    <li><strong>Read the Closing Disclosure.</strong> For most mortgages you must receive it at least three business days before closing. Compare it with your Loan Estimate and ask about anything that changed.</li>
+    <li><strong>Confirm the payment you'll actually owe</strong>, including escrow for taxes and insurance, and make sure it fits your budget with room to spare.</li>
+  </ol>
+</section>
+
+<!-- GLOSSARY -->
+<section class="block" id="glossary">
+  <h2>Glossary</h2>
+  <dl class="glossary">
+    <div><dt>Principal</dt><dd>The amount you borrow: the purchase price minus your down payment. Also the part of each payment that reduces the balance.</dd></div>
+    <div><dt>Interest rate</dt><dd>The yearly rate charged on the balance you owe. It's divided by 12 to get the monthly rate used in the payment formula.</dd></div>
+    <div><dt>APR</dt><dd>Annual percentage rate: the interest rate plus most lender fees and points, expressed as a yearly rate. Useful for comparing offers.</dd></div>
+    <div><dt>Amortization</dt><dd>Paying off a loan in equal installments, where early payments are mostly interest and later payments are mostly principal.</dd></div>
+    <div><dt>Term</dt><dd>How long you have to repay the loan, usually in years for mortgages and months for auto loans.</dd></div>
+    <div><dt>Down payment</dt><dd>Cash paid upfront toward the purchase. A larger down payment reduces the loan amount and can lower your rate or remove mortgage insurance.</dd></div>
+    <div><dt>Loan-to-value (LTV)</dt><dd>The loan amount divided by the property's value. $240,000 borrowed on a $300,000 home is 80% LTV.</dd></div>
+    <div><dt>Debt-to-income (DTI)</dt><dd>Monthly debt payments divided by gross monthly income. Lenders use it to judge whether you can afford a new payment.</dd></div>
+    <div><dt>Discount points</dt><dd>An upfront fee, 1% of the loan per point, paid to lower the interest rate.</dd></div>
+    <div><dt>Escrow</dt><dd>An account your servicer uses to collect and pay property taxes and insurance on your behalf.</dd></div>
+    <div><dt>PMI / MIP</dt><dd>Mortgage insurance that protects the lender, usually required with less than 20% down (PMI) or on FHA loans (MIP).</dd></div>
+    <div><dt>Prepayment penalty</dt><dd>A fee some lenders charge if you pay off all or part of a loan early.</dd></div>
+    <div><dt>Negative equity</dt><dd>Owing more on a loan than the asset is worth. Common in the early years of long auto loans.</dd></div>
+    <div><dt>Recast</dt><dd>Recalculating the payment on an existing loan after a large principal payment, keeping the same rate and end date.</dd></div>
+  </dl>
+</section>
+
+<!-- FAQ -->
+<section class="block" id="faq">
+  <h2>Frequently asked questions</h2>
+  <div class="faq">
+    <div class="faq-item">
+      <h3>Does this calculator give me an official loan offer?</h3>
+      <p>No. It gives an estimate based on the numbers you enter. Real offers depend on underwriting, including your credit history, income, the property and each lender's fees.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why is my real payment higher than the estimate here?</h3>
+      <p>The estimate covers principal and interest only. A real mortgage payment usually also includes property taxes and homeowners insurance paid through escrow, and possibly mortgage insurance. See <a href="#guides">what the monthly payment doesn't show</a> for an example.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Should I enter the interest rate or the APR?</h3>
+      <p>Enter the interest rate. APR includes fees spread over the loan's life, so using it in the payment formula overstates the monthly payment slightly. Use APR when comparing offers.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does the calculator assume a fixed or variable rate?</h3>
+      <p>A fixed rate for the full term. For an adjustable-rate loan, the schedule only applies to the initial fixed period. Re-run it at the highest rate the loan's caps allow to see a worst case.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does paying extra lower my monthly payment?</h3>
+      <p>Not normally. Extra principal payments shorten the loan and cut total interest, but the required payment stays the same unless your lender recasts the loan.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How much does an extra payment really save?</h3>
+      <p>On a $240,000, 30-year loan at 6.5%, an extra $100 a month saves about $58,000 in interest and pays the loan off nearly 5 years early. Early extra payments save the most, because they reduce the balance for every remaining month.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is a 15-year or 30-year mortgage better?</h3>
+      <p>A 15-year loan has higher payments but costs far less in total. On $300,000 at 6.5%, it saves over $212,000 in interest. A 30-year loan offers a lower, more flexible payment, and you can still pay extra when you're able. The right choice depends on your budget and other goals.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is a good interest rate?</h3>
+      <p>It depends on the loan type, your credit, your down payment and the market at the time. For context, Freddie Mac's weekly survey of 30-year fixed rates has ranged from a high of 18.63% in 1981 to a low of 2.65% in January 2021. Compare several same-day quotes to judge whether a current offer is competitive.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How is the payoff date worked out?</h3>
+      <p>It assumes your first payment is due next month and every payment is made on time. Your actual first payment date is set at closing and is shown in your loan documents.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is my information stored or shared?</h3>
+      <p>No. All calculations run in your browser, and nothing you type is sent to a server or saved. See the <a href="privacy.html">Privacy Policy</a> for details about the site.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block about-note" aria-labelledby="about-heading">
+  <h2 id="about-heading">About these calculations</h2>
+  <p>EasyLoanCalculator is an independent educational tool. Payments use the standard fixed-rate amortization formula shown above, calculated monthly and rounded for display. Regulatory details on this page reflect U.S. rules as described by the Consumer Financial Protection Bureau (<a href="https://www.consumerfinance.gov" rel="noopener">consumerfinance.gov</a>). This page is for general information only and is not financial, legal or tax advice. For decisions about a specific loan, speak to a licensed lender or a qualified financial adviser. Last reviewed: September 2026. Spotted an error? <a href="contact.html">Contact us</a>.</p>
+</section>
+
+</div>
 
 <footer>
-  <p>EasyLoanCalculator is for estimation purposes only — not financial advice. Always consult a licensed lender. &nbsp;·&nbsp; <a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="disclaimer.html">Disclaimer</a> &nbsp;·&nbsp; <a href="about.html">About</a></p>
+  <p>© 2026 EasyLoanCalculator. Estimates for educational purposes only, not financial advice.</p>
+  <p class="footer-links"><a href="about.html">About</a> <a href="contact.html">Contact</a> <a href="privacy.html">Privacy Policy</a> <a href="disclaimer.html">Disclaimer</a></p>
 </footer>
+
 
 <script>
   function toggleTheme() {
@@ -470,207 +895,273 @@
       : '<span class="icon">🌙</span><span>Dark</span>';
   }
 
+  // ── STATE ──
+  // Calculations always use these exact values. Sliders are only a way to set them,
+  // so a typed value such as $312,500 or 6.25% is never rounded to a slider step.
+  const state = { amount: 300000, rate: 6.5, term: 30, down: 60000 };
   let showFull = false;
   let currentType = 'Mortgage';
   let amortData = [];
 
+  const money  = (n, cents = false) => '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: cents ? 2 : 0, maximumFractionDigits: cents ? 2 : 0 });
+  const trim   = n => String(+Number(n).toFixed(3));
   const fieldConfig = {
-    amount: { label: v => '$' + Number(v).toLocaleString(),       min: 5000, max: 1500000 },
-    rate:   { label: v => parseFloat(v).toFixed(1) + '%',         min: 0.1,  max: 30      },
-    term:   { label: v => v + (v == 1 ? ' year' : ' years'),      min: 1,    max: 30      },
-    down:   { label: v => '$' + Number(v).toLocaleString(),        min: 0,    max: 500000  },
+    amount: { label: v => money(v),                             min: 1000, max: 10000000, name: 'Price / amount' },
+    rate:   { label: v => trim(v) + '%',                        min: 0,    max: 40,       name: 'Interest rate' },
+    term:   { label: v => trim(v) + (v == 1 ? ' year' : ' years'), min: 1, max: 40,       name: 'Loan term' },
+    down:   { label: v => money(v),                             min: 0,    max: 10000000, name: 'Down payment' },
   };
 
-  function syncSlider(key, val) {
-    document.getElementById('lbl-' + key).textContent = fieldConfig[key].label(val);
+  function refreshField(key) {
+    document.getElementById('lbl-' + key).textContent = fieldConfig[key].label(state[key]);
+    const rng = document.getElementById('rng-' + key);
+    rng.value = Math.min(Math.max(state[key], +rng.min), +rng.max);
     const inp = document.getElementById('inp-' + key);
-    if (document.activeElement !== inp) inp.value = val;
+    if (document.activeElement !== inp) inp.value = state[key];
     inp.classList.remove('invalid');
+  }
+
+  function syncSlider(key, val) {
+    state[key] = +val;
+    refreshField(key);
     calculate();
   }
 
   function applyDirect(key) {
     const inp = document.getElementById('inp-' + key);
     const cfg = fieldConfig[key];
-    const val = parseFloat(inp.value);
+    const raw = inp.value.trim();
+    if (raw === '') return;
+    const val = parseFloat(raw);
+    const err = document.getElementById('input-error');
     if (isNaN(val) || val < cfg.min || val > cfg.max) {
       inp.classList.add('invalid');
+      err.textContent = `${cfg.name} must be between ${cfg.label(cfg.min)} and ${cfg.label(cfg.max)}.`;
       return;
     }
+    err.textContent = '';
+    state[key] = val;
     inp.classList.remove('invalid');
-    const rng = document.getElementById('rng-' + key);
-    rng.value = Math.min(Math.max(val, +rng.min), +rng.max);
-    document.getElementById('lbl-' + key).textContent = cfg.label(val);
+    refreshField(key);
     calculate();
   }
 
   ['amount','rate','term','down'].forEach(key => {
-    document.getElementById('inp-' + key).addEventListener('keydown', e => {
-      if (e.key === 'Enter') applyDirect(key);
-    });
+    const inp = document.getElementById('inp-' + key);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') applyDirect(key); });
+    inp.addEventListener('change', () => applyDirect(key));
   });
 
+  const TYPE_SETTINGS = {
+    Mortgage: { amount: 300000, rate: 6.5, term: 30, down: 60000, title: 'Home Price',    showDown: true  },
+    Auto:     { amount: 35000,  rate: 7.5, term: 5,  down: 5000,  title: 'Vehicle Price', showDown: true  },
+    Personal: { amount: 15000,  rate: 11,  term: 5,  down: 0,     title: 'Loan Amount',   showDown: false },
+    Student:  { amount: 40000,  rate: 5.5, term: 10, down: 0,     title: 'Loan Amount',   showDown: false },
+  };
+
   function setType(btn, type) {
-    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.type-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
     btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
     currentType = type;
-    const defaults = {
-      Mortgage: { amount: 300000, rate: 6.5, term: 30, down: 60000 },
-      Auto:     { amount: 35000,  rate: 7.5, term: 5,  down: 5000  },
-      Personal: { amount: 15000,  rate: 11,  term: 5,  down: 0     },
-      Student:  { amount: 40000,  rate: 5.5, term: 10, down: 0     },
-    };
-    const d = defaults[type];
-    Object.keys(d).forEach(key => {
-      document.getElementById('rng-' + key).value = d[key];
-      syncSlider(key, d[key]);
-    });
+    const d = TYPE_SETTINGS[type];
+    ['amount','rate','term','down'].forEach(k => { state[k] = d[k]; refreshField(k); });
+    document.getElementById('amount-title').textContent = d.title;
+    document.getElementById('field-down').style.display = d.showDown ? '' : 'none';
+    document.getElementById('input-error').textContent = '';
+    calculate();
   }
 
-  function calcPayment(principal, rate, termYears) {
+  function calcPayment(principal, rate, months) {
     const mr = rate / 100 / 12;
-    const n  = termYears * 12;
-    if (mr === 0) return principal / n;
-    return principal * (mr * Math.pow(1 + mr, n)) / (Math.pow(1 + mr, n) - 1);
+    if (months <= 0) return NaN;
+    if (mr === 0) return principal / months;
+    return principal * (mr * Math.pow(1 + mr, months)) / (Math.pow(1 + mr, months) - 1);
   }
+
+  // Month-by-month schedule. Returns months taken, total interest and yearly rows.
+  function schedule(balance, rate, payment, maxMonths) {
+    const mr = rate / 100 / 12;
+    let months = 0, interest = 0, yp = 0, yi = 0;
+    const years = [];
+    while (balance > 0.005 && months < maxMonths) {
+      const ip = balance * mr;
+      const pp = Math.min(payment - ip, balance);
+      if (pp <= 0) return { months: Infinity, interest: Infinity, years };
+      balance -= pp; interest += ip; yp += pp; yi += ip; months++;
+      if (months % 12 === 0 || balance <= 0.005) {
+        years.push({ year: Math.ceil(months / 12), principal: yp, interest: yi, balance: Math.max(0, balance) });
+        yp = yi = 0;
+      }
+    }
+    return { months, interest, years };
+  }
+
+  const payoffLabel = months => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth() + months, 1)
+      .toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  };
+  const durationLabel = months => {
+    const y = Math.floor(months / 12), m = months % 12;
+    return [y ? `${y} yr${y > 1 ? 's' : ''}` : '', m ? `${m} mo` : ''].filter(Boolean).join(' ') || '0 mo';
+  };
 
   function calculate() {
-    const amount = +document.getElementById('rng-amount').value;
-    const rate   = +document.getElementById('rng-rate').value;
-    const term   = +document.getElementById('rng-term').value;
-    const down   = +document.getElementById('rng-down').value;
-
+    const { amount, rate, term } = state;
+    const down = TYPE_SETTINGS[currentType].showDown ? state.down : 0;
     const principal = Math.max(0, amount - down);
-    const monthly   = calcPayment(principal, rate, term);
-    const n         = term * 12;
-    const totalCost = monthly * n;
-    const totalInt  = totalCost - principal;
-    const pctP = principal / totalCost * 100;
-    const pctI = 100 - pctP;
+    const n = Math.round(term * 12);
 
-    const now    = new Date();
-    const payoff = new Date(now.getFullYear(), now.getMonth() + n);
-    const payoffStr = payoff.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    const pct = amount > 0 ? down / amount * 100 : 0;
+    document.getElementById('down-pct').textContent = `${pct.toFixed(pct < 10 ? 1 : 0)}% of price`;
 
-    amortData = [];
-    let balance = principal;
-    const mr = rate / 100 / 12;
-    for (let y = 1; y <= term; y++) {
-      let yp = 0, yi = 0;
-      for (let m = 0; m < 12 && balance > 0.01; m++) {
-        const ip = balance * mr;
-        const pp = Math.min(monthly - ip, balance);
-        yi += ip; yp += pp; balance -= pp;
-      }
-      amortData.push({ year: now.getFullYear() + y, principal: yp, interest: yi, balance: Math.max(0, balance) });
+    const set = (id, v) => document.getElementById(id).textContent = v;
+    set('res-note', `${trim(term)}-year ${currentType.toLowerCase()} · ${trim(rate)}% interest`);
+
+    if (principal <= 0) {
+      set('res-monthly', '$0.00');
+      set('res-principal', '$0'); set('res-interest', '$0'); set('res-total', '$0'); set('res-payoff', '—');
+      document.getElementById('bar-p').style.width = '100%';
+      document.getElementById('bar-i').style.width = '0%';
+      set('leg-p', 'Principal —'); set('leg-i', 'Interest —');
+      set('res-insight', 'The down payment covers the full price, so there is nothing to borrow.');
+      amortData = []; renderAmort();
+      return;
     }
 
-    document.getElementById('res-monthly').textContent   = '$' + fmt(monthly);
-    document.getElementById('res-note').textContent      = `${term}-year ${currentType.toLowerCase()} · ${rate}% APR`;
-    document.getElementById('res-principal').textContent = '$' + fmtK(principal);
-    document.getElementById('res-interest').textContent  = '$' + fmtK(totalInt);
-    document.getElementById('res-total').textContent     = '$' + fmtK(totalCost);
-    document.getElementById('res-payoff').textContent    = payoffStr;
+    const monthly   = calcPayment(principal, rate, n);
+    const sched     = schedule(principal, rate, monthly, n + 1);
+    const totalInt  = sched.interest;
+    const totalCost = principal + totalInt;
+    const pctP = principal / totalCost * 100;
+    amortData = sched.years;
+
+    set('res-monthly',   money(monthly, true));
+    set('res-principal', money(principal));
+    set('res-interest',  money(totalInt));
+    set('res-total',     money(totalCost));
+    set('res-payoff',    payoffLabel(n));
     document.getElementById('bar-p').style.width = pctP.toFixed(1) + '%';
-    document.getElementById('bar-i').style.width = pctI.toFixed(1) + '%';
-    document.getElementById('leg-p').textContent = `Principal ${pctP.toFixed(0)}%`;
-    document.getElementById('leg-i').textContent = `Interest ${pctI.toFixed(0)}%`;
+    document.getElementById('bar-i').style.width = (100 - pctP).toFixed(1) + '%';
+    set('leg-p', `Principal ${pctP.toFixed(0)}%`);
+    set('leg-i', `Interest ${(100 - pctP).toFixed(0)}%`);
+
+    // Plain-English insight
+    const firstInt = principal * rate / 100 / 12;
+    let insight;
+    if (rate === 0) {
+      insight = 'At 0% interest, every dollar of your payment goes toward the loan.';
+    } else {
+      const share = firstInt / monthly * 100;
+      let bal = principal, cross = 0;
+      for (let k = 1; k <= n; k++) {
+        const ip = bal * rate / 100 / 12, pp = monthly - ip;
+        if (pp > ip) { cross = k; break; }
+        bal -= pp;
+      }
+      insight = `Your first payment is about ${share.toFixed(0)}% interest. ` +
+        (cross <= 1 ? 'From the first payment, most of each payment goes to principal.'
+                    : `Principal overtakes interest in year ${Math.ceil(cross / 12)}.`);
+    }
+    set('res-insight', insight);
     renderAmort();
+
+    if (document.getElementById('extra-result').classList.contains('show')) calcExtra();
   }
 
   function renderAmort() {
     const rows = showFull ? amortData : amortData.slice(0, 5);
-    document.getElementById('amort-body').innerHTML = rows.map(r =>
-      `<tr><td>${r.year}</td><td>$${fmtK(r.principal)}</td><td>$${fmtK(r.interest)}</td><td>$${fmtK(r.balance)}</td></tr>`
-    ).join('');
-    document.querySelector('.show-more').textContent = showFull ? '▲ Show less' : '▼ Show full schedule';
+    document.getElementById('amort-body').innerHTML = rows.length
+      ? rows.map(r => `<tr><td>${r.year}</td><td>${money(r.principal)}</td><td>${money(r.interest)}</td><td>${money(r.balance)}</td></tr>`).join('')
+      : '<tr><td colspan="4">No loan to schedule.</td></tr>';
+    const btn = document.querySelector('.show-more');
+    btn.textContent = showFull ? 'Show less' : 'Show full schedule';
+    btn.setAttribute('aria-expanded', String(showFull));
+    btn.style.display = amortData.length > 5 ? '' : 'none';
+    document.getElementById('amort-title').textContent =
+      showFull || amortData.length <= 5 ? 'Amortization schedule (by loan year)' : 'Amortization schedule (first 5 years)';
   }
 
   function toggleAmort() { showFull = !showFull; renderAmort(); }
 
   // ── Extra payment calculator ──
   function calcExtra() {
-    const principal  = Math.max(0, +document.getElementById('rng-amount').value - +document.getElementById('rng-down').value);
-    const rate       = +document.getElementById('rng-rate').value;
-    const term       = +document.getElementById('rng-term').value;
-    const extraMo    = parseFloat(document.getElementById('extra-monthly').value) || 0;
-    const lump       = parseFloat(document.getElementById('extra-lump').value) || 0;
-    const result     = document.getElementById('extra-result');
+    const down      = TYPE_SETTINGS[currentType].showDown ? state.down : 0;
+    const principal = Math.max(0, state.amount - down);
+    const n         = Math.round(state.term * 12);
+    const extraMo   = Math.max(0, parseFloat(document.getElementById('extra-monthly').value) || 0);
+    const lump      = Math.max(0, parseFloat(document.getElementById('extra-lump').value) || 0);
+    const result    = document.getElementById('extra-result');
+    const show = (html, cls = 'green') => { result.className = 'extra-result show ' + cls; result.innerHTML = html; };
 
-    if (principal <= 0) {
-      result.className = 'extra-result show green';
-      result.innerHTML = 'Please set a loan amount above first.';
-      return;
+    if (principal <= 0) return show('Set a loan amount in the calculator above first.', 'warn');
+    if (extraMo <= 0 && lump <= 0) return show('Enter an extra monthly amount, a lump sum, or both to see your savings.', 'warn');
+
+    const monthly = calcPayment(principal, state.rate, n);
+    const base    = schedule(principal, state.rate, monthly, n + 1);
+    if (lump >= principal) {
+      return show(`<div class="highlight">A ${money(lump)} lump sum would pay off the whole ${money(principal)} loan today, saving ${money(base.interest)} in interest.</div>`);
     }
-    if (extraMo <= 0 && lump <= 0) {
-      result.className = 'extra-result show green';
-      result.innerHTML = 'Enter an extra monthly payment or lump sum to see your savings.';
-      return;
-    }
+    const adj   = schedule(principal - lump, state.rate, monthly + extraMo, n + 1);
+    const saved = base.interest - adj.interest;
+    const monthsSaved = base.months - adj.months;
 
-    const mr          = rate / 100 / 12;
-    const baseMonthly = calcPayment(principal, rate, term);
-    const baseTotalI  = baseMonthly * term * 12 - principal;
-
-    function monthsToPayoff(bal, pmt, mRate) {
-      if (mRate === 0) return bal / pmt;
-      if (pmt <= bal * mRate) return Infinity;
-      return -Math.log(1 - (bal * mRate) / pmt) / Math.log(1 + mRate);
-    }
-
-    const adjBal      = Math.max(0, principal - lump);
-    const adjMonthly  = baseMonthly + extraMo;
-    const adjMonths   = monthsToPayoff(adjBal, adjMonthly, mr);
-    const adjTotalI   = adjMonthly * adjMonths - adjBal;
-    const savedI      = baseTotalI - adjTotalI;
-    const savedMonths = term * 12 - adjMonths;
-    const sy          = Math.floor(savedMonths / 12);
-    const sm          = Math.round(savedMonths % 12);
-    const timeStr     = sy > 0 ? `${sy} yr${sy > 1 ? 's' : ''}${sm > 0 ? ` ${sm} mo` : ''}` : `${Math.round(savedMonths)} months`;
-
-    result.className = 'extra-result show green';
-    result.innerHTML = `
-      <div class="highlight">You save $${fmtK(savedI)} in interest and pay off ${timeStr} sooner.</div>
-      <div style="margin-top:0.5rem;opacity:0.85">
-        New monthly: $${fmt(adjMonthly)} &nbsp;·&nbsp; New term: ${Math.ceil(adjMonths / 12)} years
-        ${lump > 0 ? ` &nbsp;·&nbsp; Lump sum: $${fmtK(lump)}` : ''}
+    show(`
+      <div class="highlight">You'd save ${money(saved)} in interest and pay off the loan ${durationLabel(monthsSaved)} sooner.</div>
+      <div style="margin-top:0.5rem;opacity:0.9">
+        Monthly payment with extra: ${money(monthly + extraMo, true)}<br>
+        New payoff: ${payoffLabel(adj.months)} (${durationLabel(adj.months)} from now, instead of ${durationLabel(base.months)})
+        ${lump > 0 ? `<br>Lump sum of ${money(lump)} applied before the first payment` : ''}
       </div>
-    `;
+    `);
   }
 
   // ── Loan comparison ──
   function calcCompare() {
+    const read = (id, f) => parseFloat(document.getElementById(`cmp-${id}-${f}`).value);
     const loans = ['a','b'].map(id => ({
-      amount: parseFloat(document.getElementById(`cmp-${id}-amount`).value) || 0,
-      rate:   parseFloat(document.getElementById(`cmp-${id}-rate`).value)   || 0,
-      term:   parseFloat(document.getElementById(`cmp-${id}-term`).value)   || 0,
+      id: id.toUpperCase(),
+      amount: read(id, 'amount'), rate: read(id, 'rate'),
+      term: read(id, 'term'), fees: read(id, 'fees') || 0,
     }));
-    const res = loans.map(l => {
-      const mo    = calcPayment(l.amount, l.rate, l.term);
-      const total = mo * l.term * 12;
-      return { monthly: mo, total, interest: total - l.amount };
-    });
-    const wi = res[0].total <= res[1].total ? 0 : 1;
     const container = document.getElementById('compare-result');
+    const bad = loans.find(l => !(l.amount > 0) || isNaN(l.rate) || l.rate < 0 || l.rate > 40 || !(l.term > 0) || l.term > 40 || l.fees < 0);
+    if (bad) {
+      container.className = 'compare-result';
+      container.style.display = 'block';
+      container.innerHTML = `<p class="compare-error">Check Loan ${bad.id}: enter an amount above $0, a rate from 0 to 40%, a term from 1 to 40 years, and fees of $0 or more.</p>`;
+      return;
+    }
+    const res = loans.map(l => {
+      const n  = Math.round(l.term * 12);
+      const mo = calcPayment(l.amount, l.rate, n);
+      const interest = schedule(l.amount, l.rate, mo, n + 1).interest;
+      return { ...l, monthly: mo, interest, cost: interest + l.fees };
+    });
+    const diff = Math.abs(res[0].cost - res[1].cost);
+    const tie  = diff < 1;
+    const wi   = res[0].cost <= res[1].cost ? 0 : 1;
+    container.style.display = '';
     container.className = 'compare-result show';
-    container.innerHTML = ['a','b'].map((id, i) => {
-      const isWinner = i === wi;
-      const diff = Math.abs(res[0].total - res[1].total);
+    container.innerHTML = res.map((r, i) => {
+      const isWinner = !tie && i === wi;
       return `
         <div class="compare-res-col${isWinner ? ' winner' : ''}">
-          ${isWinner ? '<div class="compare-winner-badge">✓ Lower Total Cost</div>' : ''}
-          <div class="compare-res-title">Loan ${id.toUpperCase()}</div>
-          <div class="compare-res-row"><span>Monthly</span><span>$${fmt(res[i].monthly)}</span></div>
-          <div class="compare-res-row"><span>Total Interest</span><span>$${fmtK(res[i].interest)}</span></div>
-          <div class="compare-res-row"><span>Total Cost</span><span>$${fmtK(res[i].total)}</span></div>
-          ${!isWinner ? `<div class="compare-res-row" style="margin-top:0.4rem;opacity:0.7"><span>Extra vs Loan ${['A','B'][wi]}</span><span>$${fmtK(diff)}</span></div>` : ''}
-        </div>
-      `;
-    }).join('');
+          ${isWinner ? '<div class="compare-winner-badge">✓ Lower cost of borrowing</div>' : ''}
+          <div class="compare-res-title">Loan ${r.id}</div>
+          <div class="compare-res-row"><span>Monthly</span><span>${money(r.monthly, true)}</span></div>
+          <div class="compare-res-row"><span>Total interest</span><span>${money(r.interest)}</span></div>
+          <div class="compare-res-row"><span>Upfront fees</span><span>${money(r.fees)}</span></div>
+          <div class="compare-res-row"><span>Interest + fees</span><span>${money(r.cost)}</span></div>
+          ${!tie && !isWinner ? `<div class="compare-res-row" style="margin-top:0.4rem;opacity:0.75"><span>Costs more than Loan ${res[wi].id} by</span><span>${money(diff)}</span></div>` : ''}
+        </div>`;
+    }).join('') +
+      (tie ? '<p class="compare-note">Both loans cost the same to borrow over their full terms.</p>' : '') +
+      (res[0].amount !== res[1].amount ? '<p class="compare-note">The loan amounts differ, so this isn\u2019t a like-for-like comparison. Use the same amount for a fair test.</p>' : '') +
+      (res[0].term !== res[1].term ? '<p class="compare-note">The terms differ. A shorter loan usually costs less in total but has a higher monthly payment. Check that the payment fits your budget.</p>' : '') +
+      '<p class="compare-note">Assumes each loan is kept for its full term. If you expect to sell or refinance sooner, upfront fees weigh more heavily.</p>';
   }
-
-  function fmt(n)  { return Math.round(n).toLocaleString(); }
-  function fmtK(n) { return Math.round(n).toLocaleString(); }
 
   calculate();
 </script>
